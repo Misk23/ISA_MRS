@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../../services/security/authentication-service.service';
+import { EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +10,43 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  public user;
 
-  ngOnInit(): void {
+  public wrongUsernameOrPass: boolean;
+
+  @Output()
+  changeDisplay: EventEmitter<any> = new EventEmitter();
+
+  constructor(private authenticationService: AuthenticationService,
+              private router: Router) {
+    this.user = {};
+
+    this.wrongUsernameOrPass = false;
+   }
+
+  ngOnInit() {
+
   }
+
+  login(): void {
+    this.authenticationService.login(this.user.name, this.user.password, this);
+  }
+
+  handleLogin(loggedIn) {
+    if (loggedIn) {
+      console.log('SUCCESSFUL COMPONENT');
+      this.router.navigate(['/main']);
+    } else {
+      this.wrongUsernameOrPass = true;
+      console.log('ERROR COMPONENT');
+    }
+  }
+
+  openRegistration() {
+    this.router.navigate(['/register']);
+
+  }
+
+
 
 }
