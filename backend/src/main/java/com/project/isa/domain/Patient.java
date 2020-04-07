@@ -25,19 +25,19 @@ public class Patient extends User {
     private String country;
 
     @Column
-    private long telephone;
+    private String telephone;
 
     @Column
-    private long insurance;
+    private String insurance;
 
-    @Column
+    @Column(nullable = false, columnDefinition = "BOOL DEFAULT FALSE")
     private boolean isVerified;
 
     public Patient(){
 
     }
 
-    public Patient(String name, String last_name, String email, String address, String city, String country, long telephone, long insurance, boolean isVerified) {
+    public Patient(String name, String last_name, String email, String address, String city, String country, String telephone, String insurance, boolean isVerified) {
         super();
         this.name = name;
         this.last_name = last_name;
@@ -98,19 +98,19 @@ public class Patient extends User {
         this.country = country;
     }
 
-    public long getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(long telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 
-    public long getInsurance() {
+    public String getInsurance() {
         return insurance;
     }
 
-    public void setInsurance(long insurance) {
+    public void setInsurance(String insurance) {
         this.insurance = insurance;
     }
 

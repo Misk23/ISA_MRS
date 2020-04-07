@@ -44,11 +44,11 @@ public class UserController {
                     new UsernamePasswordAuthenticationToken(
                             loginDTO.getUsername(), loginDTO.getPassword());
 
-            System.out.println("password" + loginDTO.getPassword());
+            //System.out.println("password" + loginDTO.getPassword());
             Authentication authentication = authenticationManager.authenticate(token);
-            System.out.println("details");
+            //System.out.println("details");
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            System.out.println(authentication.getAuthorities());
+            //System.out.println(authentication.getAuthorities());
 
             // Reload user details so we can generate token
             UserDetails details = userDetailsService.

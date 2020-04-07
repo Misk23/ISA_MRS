@@ -34,17 +34,17 @@ public class RegistrationRequest {
     private String country;
 
     @Column
-    private long telephone;
+    private String telephone;
 
     @Column
-    private long insurance;
+    private String insurance;
 
 
     public RegistrationRequest(){
 
     }
 
-    public RegistrationRequest(String username, String password, String name, String last_name, String email, String address, String city, String country, long telephone, long insurance, boolean isVerified) {
+    public RegistrationRequest(String username, String password, String name, String last_name, String email, String address, String city, String country, String telephone, String insurance) {
         this.username = username;
         this.password = password;
         this.name = name;
@@ -129,19 +129,19 @@ public class RegistrationRequest {
         this.country = country;
     }
 
-    public long getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(long telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 
-    public long getInsurance() {
+    public String getInsurance() {
         return insurance;
     }
 
-    public void setInsurance(long insurance) {
+    public void setInsurance(String insurance) {
         this.insurance = insurance;
     }
 

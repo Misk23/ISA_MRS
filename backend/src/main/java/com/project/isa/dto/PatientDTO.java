@@ -10,8 +10,8 @@ public class PatientDTO {
     private String address;
     private String city;
     private String country;
-    private long telephone;
-    private long insurance;
+    private String telephone;
+    private String insurance;
 
     public String getUsername() {
         return username;
@@ -77,19 +77,19 @@ public class PatientDTO {
         this.country = country;
     }
 
-    public long getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(long telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 
-    public long getInsurance() {
+    public String getInsurance() {
         return insurance;
     }
 
-    public void setInsurance(long insurance) {
+    public void setInsurance(String insurance) {
         this.insurance = insurance;
     }
 }

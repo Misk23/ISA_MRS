@@ -6,6 +6,7 @@ import com.project.isa.dto.PatientDTO;
 import com.project.isa.exceptions.EntityAlreadyExistsException;
 import com.project.isa.exceptions.InvalidDataException;
 import com.project.isa.repository.AuthorityRepository;
+import com.project.isa.repository.PatientRepository;
 import com.project.isa.repository.RegistrationRequestRepository;
 import com.project.isa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PatientRepository patientRepository;
 
     @Autowired
     private AuthorityRepository authorityRepository;
@@ -57,18 +61,18 @@ public class UserServiceImpl implements UserService {
         if (patientDTO.getCountry() == null){
             throw new InvalidDataException("There is no country");
         }
-        if (patientDTO.getTelephone() == 0){
+        if (patientDTO.getTelephone() == null){
             throw new InvalidDataException("There is no telephone");
         }
-        if (patientDTO.getInsurance() == 0){
+        if (patientDTO.getInsurance() == null){
             throw new InvalidDataException("There is no insurance number");
         }
 
-        if(userRepository.findByUsername(patientDTO.getUsername()).isPresent()) {
+        if(patientRepository.findByUsername(patientDTO.getUsername()).isPresent()) {
             throw new EntityAlreadyExistsException("Username is taken");
         }
 
-        if(userRepository.findByEmail(patientDTO.getEmail()).isPresent()) {
+        if(patientRepository.findByEmail(patientDTO.getEmail()).isPresent()) {
             throw new EntityAlreadyExistsException("Email already exists");
         }
 

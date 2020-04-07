@@ -7,9 +7,9 @@
       <a class="navbar-brand" href="#">Klinički Centar</a>
     </div>
     <ul class="navbar-nav ml-auto">
-      <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <button class="btn" *ngIf="loggedIn()" (click)="logout()" id="logout"><span class="glyphicon glyphicon-log-in"></span>Logout</button>
+      <li><a *ngIf="!loggedIn()" href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      <li><a *ngIf="!loggedIn()" href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li><a *ngIf="loggedIn()" (click)="logout()" id="logout"><span class="glyphicon glyphicon-log-in"></span>Logout</a><li>
     </ul>
   </div>
 </nav>
