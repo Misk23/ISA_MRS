@@ -1,0 +1,42 @@
+<div class="col-md-3"></div>
+    <div class="col-sm-10">
+        <h2 class="form-signin-heading">List Of Registration Requests</h2>
+        <table class="table table-striped" id = "mark">
+            <thead>
+                <tr>
+                    <th>  </th>
+                    <th>Username</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>Country</th>
+                    <th>Telephone</th>
+                    <th>Insurance</th>
+                    <th>  </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let req of registration_requests; index as i">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ req.username}}</td>
+                    <td>{{ req.name}}</td>
+                    <td>{{ req.last_name}}</td>
+                    <td>{{ req.email}}</td>
+                    <td>{{ req.address}}</td>
+                    <td>{{ req.city}}</td>
+                    <td>{{ req.country}}</td>
+                    <td>{{ req.telephone}}</td>
+                    <td>{{ req.insurance}}</td>
+                    <td><button type="button" class="btn btn-primary"  id="approve" (click) = "onApprove(req.username, req.email)"><i class="far fa-eye">Approve</i></button></td>
+                    <td><button type="button" class="btn btn-primary"  id="delete" (click) = "onDelete(req.username, req.email)"><i class="far fa-eye">X</i></button></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Send message to user:</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" placeholder="Message to user" [(ngModel)] = "message"></textarea>
+        </div>
+    </div>
+    
