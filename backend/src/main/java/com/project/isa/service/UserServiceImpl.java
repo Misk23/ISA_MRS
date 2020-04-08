@@ -1,7 +1,9 @@
 package com.project.isa.service;
 
 
+import com.project.isa.domain.Patient;
 import com.project.isa.domain.RegistrationRequest;
+import com.project.isa.domain.User;
 import com.project.isa.dto.PatientDTO;
 import com.project.isa.exceptions.EntityAlreadyExistsException;
 import com.project.isa.exceptions.InvalidDataException;
@@ -9,10 +11,12 @@ import com.project.isa.repository.AuthorityRepository;
 import com.project.isa.repository.PatientRepository;
 import com.project.isa.repository.RegistrationRequestRepository;
 import com.project.isa.repository.UserRepository;
+import org.hibernate.exception.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -72,9 +76,18 @@ public class UserServiceImpl implements UserService {
             throw new EntityAlreadyExistsException("Username is taken");
         }
 
-        if(patientRepository.findByEmail(patientDTO.getEmail()).isPresent()) {
-            throw new EntityAlreadyExistsException("Email already exists");
+        if(registrationRequestRepository.findByUsername(patientDTO.getUsername()).isPresent()) {
+            throw new EntityAlreadyExistsException("Username is taken");
         }
+
+        /*if(patientRepository.findByEmail(patientDTO.getEmail()).isPresent()) {
+            throw new EntityAlreadyExistsException("Email already exists");
+        }*/
+
+        //Zakomentarisano zarad lakseg testiranja
+        /*if(registrationRequestRepository.findByEmail(patientDTO.getEmail()).isPresent()) {
+            throw new EntityAlreadyExistsException("Email already exists");
+        }*/
 
         if(patientDTO.getUsername().length() < 3 || patientDTO.getUsername().length() > 20)
             throw new InvalidDataException("Invalid username format");
@@ -98,6 +111,20 @@ public class UserServiceImpl implements UserService {
 
         registrationRequestRepository.save(registrationRequest);
 
+    }
+
+    public void verifyUser(String username) throws InvalidDataException{
+
+        if (username == null ) throw new InvalidDataException("Username not defined");
+
+        Optional<Patient> user = patientRepository.findByUsername(username);
+
+        if(!user.isPresent()){
+            throw new InvalidDataException("Username not found");
+        }
+
+        user.get().setVerified(true);
+        patientRepository.save(user.get());
     }
 
 

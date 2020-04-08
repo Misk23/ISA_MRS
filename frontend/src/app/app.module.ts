@@ -2,7 +2,7 @@
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@Angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 import {RouterModule, Routes} from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -21,6 +21,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptorService } from './services/security/token-interceptor.service';
 import { LoginGuardGuard } from './services/security/login-guard.guard';
 import { MainComponent } from './components/main/main.component';
+import { RegistrationRequestsComponent } from './components/registration-requests/registration-requests.component';
+import { UserService } from './services/user.service';
+import { AdminService } from './services/admin.service';
 
 
 const appRoutes: Routes = [
@@ -35,6 +38,10 @@ const appRoutes: Routes = [
   {
     path: 'main',
     component: MainComponent
+  },
+  {
+    path: 'registration_requests',
+    component: RegistrationRequestsComponent
   }
 ]
 
@@ -44,7 +51,8 @@ const appRoutes: Routes = [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    MainComponent
+    MainComponent,
+    RegistrationRequestsComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +73,9 @@ const appRoutes: Routes = [
       useClass: TokenInterceptorService,
       multi: true
     },
-    AuthenticationService
+    AuthenticationService,
+    UserService,
+    AdminService
   ],
   bootstrap: [AppComponent]
 })

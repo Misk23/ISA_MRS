@@ -78,7 +78,7 @@ export class RegisterComponent implements OnInit {
     }
 
     if (this.registerRequest.confirm_password != undefined){
-      if(this.registerRequest.confirm_password != this.registerRequest.confirm_password){
+      if(this.registerRequest.password != this.registerRequest.confirm_password){
         Successful = false;
         this.error_messages.confirm_password = true;
       }

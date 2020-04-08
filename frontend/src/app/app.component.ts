@@ -3,6 +3,7 @@ import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from './services/security/authentication-service.service'
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -30,6 +31,19 @@ export class AppComponent implements OnInit{
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
+  }
+
+  isAdmin(){
+    const roles = this.authService.getRoles();
+    if(roles.includes('ADMIN_ROLE')){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  showAllRegistrationRequests(){
+    this.router.navigate(['/registration_requests'])
+
   }
 
 

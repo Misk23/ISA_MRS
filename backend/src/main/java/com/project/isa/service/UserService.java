@@ -7,4 +7,6 @@ import com.project.isa.exceptions.InvalidDataException;
 public interface UserService {
 
     public void sendRegistrationRequest(PatientDTO patientDTO) throws InvalidDataException, EntityAlreadyExistsException;
+
+    public void verifyUser(String username) throws  InvalidDataException;
 }

@@ -19,7 +19,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-;
 
 @Configuration
 @EnableWebSecurity
@@ -40,8 +39,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		protected void configure(HttpSecurity httpSecurity) throws Exception {
 			httpSecurity.csrf().disable()
 			.authorizeRequests()
-			
 
+			.antMatchers("/admin/approve_registration_request").hasAuthority("ADMIN_ROLE")
+			.antMatchers("/admin/deny_registration_request").hasAuthority("ADMIN_ROLE")
+			.antMatchers("/admin/get_registration_requests").hasAuthority("ADMIN_ROLE")
+			.antMatchers("/user/verify_user/{username}").permitAll()
 			.antMatchers("/user/register").permitAll()
 			.antMatchers("/user/login").permitAll().anyRequest()
 					.authenticated().and().exceptionHandling().and().sessionManagement()
