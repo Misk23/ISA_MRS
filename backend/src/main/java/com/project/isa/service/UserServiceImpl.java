@@ -127,5 +127,18 @@ public class UserServiceImpl implements UserService {
         patientRepository.save(user.get());
     }
 
+    public boolean checkVerification(String username) throws InvalidDataException{
+
+        if (username == null ) throw new InvalidDataException("Username not defined");
+
+        Optional<Patient> user = patientRepository.findByUsername(username);
+
+        if(!user.isPresent()){
+            throw new InvalidDataException("Username not found");
+        }
+
+        return user.get().isVerified();
+    }
+
 
 }

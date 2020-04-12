@@ -82,6 +82,18 @@ public class UserController {
         return new ResponseEntity<String>("Successful verification", HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/check_verification/{username}", method = RequestMethod.GET)
+    public ResponseEntity<Boolean> checkVerification(@PathVariable  String username){
+        boolean verified;
+        try{
+            verified = userService.checkVerification(username);
+        }catch (InvalidDataException e){
+            e.printStackTrace();
+            return new ResponseEntity<Boolean>(false,  HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<Boolean>(verified, HttpStatus.OK);
+    }
+
 
 
 

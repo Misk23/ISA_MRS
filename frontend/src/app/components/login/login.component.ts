@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/security/authentication-service.service';
 import { EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -11,15 +12,17 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   public user;
-
+  public verified;
   public wrongUsernameOrPass: boolean;
 
   @Output()
   changeDisplay: EventEmitter<any> = new EventEmitter();
 
   constructor(private authenticationService: AuthenticationService,
-              private router: Router) {
+              private router: Router,
+              private userService: UserService) {
     this.user = {};
+
 
     this.wrongUsernameOrPass = false;
    }

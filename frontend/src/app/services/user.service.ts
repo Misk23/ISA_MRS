@@ -19,4 +19,8 @@ export class UserService {
             {headers, responseType : 'text' as 'json'} );
    }
 
+   checkVerification(username: String){
+    return this.http.get(this.basePath + '/check_verification/'+ username, {responseType: 'text'});
+   }
+
 }

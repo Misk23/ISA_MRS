@@ -9,4 +9,6 @@ public interface UserService {
     public void sendRegistrationRequest(PatientDTO patientDTO) throws InvalidDataException, EntityAlreadyExistsException;
 
     public void verifyUser(String username) throws  InvalidDataException;
+
+    public boolean checkVerification(String username) throws InvalidDataException;
 }
