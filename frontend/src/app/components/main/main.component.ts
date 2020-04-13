@@ -9,7 +9,7 @@ import { AuthenticationService } from 'src/app/services/security/authentication-
 })
 export class MainComponent implements OnInit {
 
-  public verified;
+  public verified = 'true';
 
   constructor(private userService: UserService, private authService: AuthenticationService) { }
 

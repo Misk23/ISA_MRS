@@ -1,9 +1,11 @@
 package com.project.isa.controller;
 
 
+import com.project.isa.domain.Patient;
 import com.project.isa.dto.LoginDTO;
 import com.project.isa.dto.PatientDTO;
 import com.project.isa.exceptions.EntityAlreadyExistsException;
+import com.project.isa.exceptions.EntityDoesNotExistException;
 import com.project.isa.exceptions.InvalidDataException;
 import com.project.isa.security.TokenUtils;
 import com.project.isa.service.UserService;
@@ -75,7 +77,7 @@ public class UserController {
     public ResponseEntity<String> verifyUser(@PathVariable String username){
         try{
             userService.verifyUser(username);
-        }catch (InvalidDataException e){
+        }catch (InvalidDataException | EntityDoesNotExistException e){
             e.printStackTrace();
             return new ResponseEntity<String>("Verification failed", HttpStatus.BAD_REQUEST);
         }
@@ -87,11 +89,35 @@ public class UserController {
         boolean verified;
         try{
             verified = userService.checkVerification(username);
-        }catch (InvalidDataException e){
+        }catch (InvalidDataException | EntityDoesNotExistException e){
             e.printStackTrace();
             return new ResponseEntity<Boolean>(false,  HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<Boolean>(verified, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{username}", method = RequestMethod.GET)
+    public ResponseEntity<PatientDTO> findByUsername(@PathVariable String username){
+        PatientDTO patientDTO = new PatientDTO();
+        try{
+            patientDTO = new PatientDTO(userService.findByUsername(username));
+
+        }catch (InvalidDataException | EntityDoesNotExistException e){
+            e.printStackTrace();
+            return new ResponseEntity<PatientDTO>(patientDTO, HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<PatientDTO>(patientDTO, HttpStatus.OK);
+    }
+    @RequestMapping(value = "/update_profile", method = RequestMethod.POST)
+    public ResponseEntity<String> updateProfile(@RequestBody PatientDTO patientDTO){
+        try{
+            userService.changePatient(patientDTO);
+        }catch (EntityDoesNotExistException e){
+            e.printStackTrace();
+            return new ResponseEntity<String>("Profile change failed", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<String>("Profile change completed", HttpStatus.OK);
     }
 
 

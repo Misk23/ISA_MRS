@@ -1,5 +1,7 @@
 package com.project.isa.dto;
 
+import com.project.isa.domain.Patient;
+
 public class PatientDTO {
 
     private String username;
@@ -12,6 +14,24 @@ public class PatientDTO {
     private String country;
     private String telephone;
     private String insurance;
+
+
+    public PatientDTO(){
+
+    }
+
+    public PatientDTO (Patient patient){
+        this.setUsername(patient.getUsername());
+        this.setPassword(patient.getPassword());
+        this.setName(patient.getName());
+        this.setLast_name(patient.getLast_name());
+        this.setEmail(patient.getEmail());
+        this.setAddress(patient.getAddress());
+        this.setCity(patient.getCity());
+        this.setCountry(patient.getCountry());
+        this.setTelephone(patient.getTelephone());
+        this.setInsurance(patient.getInsurance());
+    }
 
     public String getUsername() {
         return username;

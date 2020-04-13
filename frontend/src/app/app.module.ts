@@ -24,6 +24,7 @@ import { MainComponent } from './components/main/main.component';
 import { RegistrationRequestsComponent } from './components/registration-requests/registration-requests.component';
 import { UserService } from './services/user.service';
 import { AdminService } from './services/admin.service';
+import { PatientProfileComponent } from './components/patient-profile/patient-profile.component';
 
 
 const appRoutes: Routes = [
@@ -42,6 +43,10 @@ const appRoutes: Routes = [
   {
     path: 'registration_requests',
     component: RegistrationRequestsComponent
+  },
+  {
+    path: 'patient_profile',
+    component: PatientProfileComponent
   }
 ]
 
@@ -52,7 +57,8 @@ const appRoutes: Routes = [
     LoginComponent,
     RegisterComponent,
     MainComponent,
-    RegistrationRequestsComponent
+    RegistrationRequestsComponent,
+    PatientProfileComponent
   ],
   imports: [
     BrowserModule,

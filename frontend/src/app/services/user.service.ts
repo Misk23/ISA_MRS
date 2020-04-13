@@ -23,4 +23,15 @@ export class UserService {
     return this.http.get(this.basePath + '/check_verification/'+ username, {responseType: 'text'});
    }
 
+   findByUsername(username: String){
+     return this.http.get(this.basePath + "/" + username, {responseType: 'json'});
+   }
+
+   updateProfile(newUser){
+    var headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    return this.http.post(this.basePath +"/update_profile", JSON.stringify(newUser),
+          {headers, responseType: 'text' as 'json'});
+   }
+
 }

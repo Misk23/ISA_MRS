@@ -1,0 +1,87 @@
+<div class="col-md-9 personal-info">
+    <div class="alert alert-info alert-dismissable">
+      <a class="panel-close close" data-dismiss="alert">×</a> 
+      <i class="fa fa-coffee"></i>
+      You <strong>can't</strong> change your <strong>email</strong> or your <strong>insurance</strong> number.
+    </div>
+    <h3>{{currentUser.username}}'s Personal Info</h3>
+    <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-md-3 control-label">New Password:</label>
+            <div class="col-md-8">
+                 <input class="form-control" type="password" id="password" name="password" [(ngModel)]="currentUser.password">
+                 <p class="alert alert-warning box-msg" *ngIf="error_messages.password" style="color:red">Password must be between 3 and 20 characters...</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Confirm password:</label>
+            <div class="col-md-8">
+                 <input class="form-control" type="password" id="confirm_password"  name="confirm_password" [(ngModel)]="currentUser.confirm_password">
+                 <p class="alert alert-warning box-msg" *ngIf="error_messages.confirm_password" style="color:red">Password repetition incorrect...</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Email:</label>
+            <div class="col-lg-8">
+                <label class="form-control" type="email">{{currentUser.email}}</label>
+            </div>
+         </div>  
+        <div class="form-group">
+            <label class="col-lg-3 control-label">First name:</label>
+            <div class="col-lg-8">
+                <input class="form-control" type="text" id="name" name="name" value={{currentUser.name}} [(ngModel)]="currentUser.name">
+                <p class="alert alert-warning box-msg" *ngIf="error_messages.name" style="color:red">Name must be between 3 and 20 characters..</p>
+                <p class="alert alert-warning box-msg" *ngIf="error_messages.name_not_letter" style="color:red">Please enter valid name</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Last name:</label>
+            <div class="col-lg-8">
+                <input class="form-control" type="text" id="last_name" name="last_name" value={{currentUser.last_name}} [(ngModel)]="currentUser.last_name">
+                <p class="alert alert-warning box-msg" *ngIf="error_messages.last_name"  style="color:red">Last name must be between 3 and 20 characters..</p>
+                <p class="alert alert-warning box-msg" *ngIf="error_messages.last_name_not_letter" style="color:red">Please enter valid last name</p>
+            </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Address:</label>
+            <div class="col-lg-8">
+                <input class="form-control" type="text" id="address" name="address" value={{currentUser.address}} [(ngModel)]="currentUser.address">
+            </div>
+         </div>
+         <div class="form-group">
+            <label class="col-lg-3 control-label">City:</label>
+              <div class="col-lg-8">
+                  <input class="form-control" type="text" id="city" name="city" value={{currentUser.city}} [(ngModel)]="currentUser.city">
+                  <p class="alert alert-warning box-msg" *ngIf="error_messages.city_not_letter" style="color:red">Please eneter valid city</p>
+              </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Country:</label>
+              <div class="col-lg-8">
+                  <input class="form-control" type="text" id="country" name="country" value={{currentUser.country}} [(ngModel)]="currentUser.country">
+                  <p class="alert alert-warning box-msg" *ngIf="error_messages.country_not_letter" style="color:red">Please enter valid country</p>
+              </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Phone Number:</label>
+              <div class="col-lg-8">
+                  <input class="form-control" type="text" id="telephone" name="telephone" value={{currentUser.telephone}} [(ngModel)]="currentUser.telephone">
+                  <p class="alert alert-warning box-msg" *ngIf="error_messages.telephone_not_number" style="color:red">Please enter a valid telephone number</p>
+              </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Insurance:</label>
+              <div class="col-lg-8">
+                  <label class="form-control" type="text">{{currentUser.insurance}}</label>
+              </div>
+        </div> 
+        <div class="form-group">
+          <label class="col-md-3 control-label"></label>
+          <div class="col-md-8">
+            <input type="button" class="btn btn-primary" value="Save Changes" (click) = "updateProfile()">
+            <span></span>
+            <input type="reset" class="btn btn-default" value="Cancel">
+          </div>
+        </div>
+    </form>
+  </div>

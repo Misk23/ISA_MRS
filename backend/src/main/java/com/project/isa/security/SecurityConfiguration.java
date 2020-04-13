@@ -43,6 +43,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers("/admin/approve_registration_request").hasAuthority("ADMIN_ROLE")
 			.antMatchers("/admin/deny_registration_request").hasAuthority("ADMIN_ROLE")
 			.antMatchers("/admin/get_registration_requests").hasAuthority("ADMIN_ROLE")
+			.antMatchers("/user/update_profile").hasAuthority("PATIENT_ROLE")
+			.antMatchers("/user/{username}").permitAll()
 			.antMatchers("/user/check_verification/{username}").permitAll()
 			.antMatchers("/user/verify_user/{username}").permitAll()
 			.antMatchers("/user/register").permitAll()

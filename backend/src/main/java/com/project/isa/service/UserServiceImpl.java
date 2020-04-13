@@ -6,6 +6,7 @@ import com.project.isa.domain.RegistrationRequest;
 import com.project.isa.domain.User;
 import com.project.isa.dto.PatientDTO;
 import com.project.isa.exceptions.EntityAlreadyExistsException;
+import com.project.isa.exceptions.EntityDoesNotExistException;
 import com.project.isa.exceptions.InvalidDataException;
 import com.project.isa.repository.AuthorityRepository;
 import com.project.isa.repository.PatientRepository;
@@ -13,6 +14,7 @@ import com.project.isa.repository.RegistrationRequestRepository;
 import com.project.isa.repository.UserRepository;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -113,31 +115,68 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public void verifyUser(String username) throws InvalidDataException{
+    public void verifyUser(String username) throws InvalidDataException, EntityDoesNotExistException{
 
         if (username == null ) throw new InvalidDataException("Username not defined");
 
-        Optional<Patient> user = patientRepository.findByUsername(username);
+        Optional<Patient> patient = patientRepository.findByUsername(username);
 
-        if(!user.isPresent()){
-            throw new InvalidDataException("Username not found");
+        if(!patient.isPresent()){
+            throw new EntityDoesNotExistException("Username not found");
         }
 
-        user.get().setVerified(true);
-        patientRepository.save(user.get());
+        patient.get().setVerified(true);
+        patientRepository.save(patient.get());
     }
 
-    public boolean checkVerification(String username) throws InvalidDataException{
+    public boolean checkVerification(String username) throws InvalidDataException, EntityDoesNotExistException{
 
         if (username == null ) throw new InvalidDataException("Username not defined");
 
-        Optional<Patient> user = patientRepository.findByUsername(username);
+        Optional<Patient> patient = patientRepository.findByUsername(username);
 
-        if(!user.isPresent()){
-            throw new InvalidDataException("Username not found");
+        if(!patient.isPresent()){
+            throw new EntityDoesNotExistException("Username not found");
         }
 
-        return user.get().isVerified();
+        return patient.get().isVerified();
+    }
+
+    public Patient findByUsername(String username) throws InvalidDataException, EntityDoesNotExistException {
+
+        if (username == null ) throw new InvalidDataException("Username not defined");
+
+        Optional<Patient> patient = patientRepository.findByUsername(username);
+
+        if(!patient.isPresent()){
+            throw new EntityDoesNotExistException("Username not found");
+        }
+
+        return patient.get();
+    }
+
+    public boolean changePatient(PatientDTO patientDTO) throws EntityDoesNotExistException{
+
+        Optional<Patient> patient = patientRepository.findByUsername(patientDTO.getUsername());
+
+        if(!patient.isPresent()){
+            throw new EntityDoesNotExistException("Username not found");
+        }
+        patient.get().setName(patientDTO.getName());
+        patient.get().setLast_name(patientDTO.getLast_name());
+        patient.get().setAddress(patientDTO.getAddress());
+        patient.get().setCity(patientDTO.getCity());
+        patient.get().setCountry(patientDTO.getCountry());
+        patient.get().setTelephone(patientDTO.getTelephone());
+
+        if (!patient.get().getPassword().equals(patientDTO.getPassword())){
+            BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
+            patient.get().setPassword(enc.encode(patientDTO.getPassword()));
+            System.out.println(enc.encode(patient.get().getPassword()));
+        }
+
+        patientRepository.save(patient.get());
+        return true;
     }
 
 

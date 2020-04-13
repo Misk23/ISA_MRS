@@ -41,10 +41,23 @@ export class AppComponent implements OnInit{
       return false;
     }
   }
+  isPatient(){
+    const roles = this.authService.getRoles();
+    if(roles.includes('PATIENT_ROLE')){
+      return true;
+    }else{
+      return false;
+    }
+  }
   showAllRegistrationRequests(){
     this.router.navigate(['/registration_requests'])
 
   }
+  showPatientProfile(){
+    this.router.navigate(['/patient_profile'])
+
+  }
+  
 
 
 }

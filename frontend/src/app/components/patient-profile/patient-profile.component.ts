@@ -1,58 +1,55 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { UserService } from '../../services/user.service'
+import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/security/authentication-service.service';
+import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
-import { ThrowStmt } from '@angular/compiler';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: 'app-patient-profile',
+  templateUrl: './patient-profile.component.html',
+  styleUrls: ['./patient-profile.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class PatientProfileComponent implements OnInit {
 
-  public registerRequest;
+  public currentUser;
   public error_messages;
+  
 
-  @Output()
-  changeDisplay:EventEmitter<any> = new EventEmitter();
-
-  constructor(private userService: UserService, private router:Router) {
+  constructor(private authService: AuthenticationService, private userService: UserService, private router: Router) { 
     
-    this.registerRequest = {};
+    this.currentUser = {};
     this.error_messages = {};
-    this.error_messages.username = false;
-    this.error_messages.username_taken = false;
     this.error_messages.password = false;
     this.error_messages.confirm_password = false;
     this.error_messages.name = false;
     this.error_messages.last_name = false;
     this.error_messages.telephone_not_number = false;
-    this.error_messages.insurance_not_number = false;
     this.error_messages.name_not_letter = false;
     this.error_messages.last_name_not_letter = false;
     this.error_messages.city_not_letter = false;
     this.error_messages.country_not_letter = false;
-
-   }
+  }
 
   ngOnInit(): void {
-  }
+    const user = this.authService.getCurrentUser();
+    console.log("ngOnInit");
+    console.log(user.username)
+    this.userService.findByUsername(user.username).subscribe(success => { this.currentUser = success; })
 
-  openRegistration(){
-    this.changeDisplay.emit();
   }
-  
-  register(){
+  updateProfile(){
+
 
     if(!this.validateForm())
       return;
 
-    this.userService.sendRegisterRequest(this.registerRequest).subscribe(success => {
+    
+    this.userService.updateProfile(this.currentUser).subscribe(success => {
       this.router.navigate(['/']);
     }, err => {
       alert(err.error);
       console.log(err);
     });
+    
   }
 
   validateForm(): boolean{
@@ -72,18 +69,9 @@ export class RegisterComponent implements OnInit {
     this.error_messages.country_not_letter = false;
 
     var Successful = true;
-    if(this.registerRequest.username != undefined){
-      if(this.registerRequest.username.length < 3 || this.registerRequest.username.length >20){
-        Successful = false;
-        this.error_messages.username = true;
-      }
-    } else{
-      Successful = false;
-      this.error_messages.username = true;
-    }
-
-    if (this.registerRequest.password != undefined){
-      if(this.registerRequest.password.length < 3 || this.registerRequest.password.length >20){
+    
+    if (this.currentUser.password != undefined){
+      if(this.currentUser.password.length < 3 || this.currentUser.password.length >20){
         Successful = false;
         this.error_messages.password = true;
       }
@@ -92,8 +80,8 @@ export class RegisterComponent implements OnInit {
       this.error_messages.password = true;
     }
 
-    if (this.registerRequest.confirm_password != undefined){
-      if(this.registerRequest.password != this.registerRequest.confirm_password){
+    if (this.currentUser.confirm_password != undefined){
+      if(this.currentUser.password != this.currentUser.confirm_password){
         Successful = false;
         this.error_messages.confirm_password = true;
       }
@@ -102,8 +90,8 @@ export class RegisterComponent implements OnInit {
       this.error_messages.confirm_password = true;
     }
 
-    if (this.registerRequest.name != undefined){
-      if(this.registerRequest.name.length < 3 || this.registerRequest.name.length >20){
+    if (this.currentUser.name != undefined){
+      if(this.currentUser.name.length < 3 || this.currentUser.name.length >20){
         Successful = false;
         this.error_messages.name = true;
       }
@@ -112,8 +100,8 @@ export class RegisterComponent implements OnInit {
       this.error_messages.name = true;
     }
 
-    if (this.registerRequest.last_name != undefined){
-      if(this.registerRequest.last_name.length < 3 || this.registerRequest.last_name.length >20){
+    if (this.currentUser.last_name != undefined){
+      if(this.currentUser.last_name.length < 3 || this.currentUser.last_name.length >20){
         Successful = false;
         this.error_messages.last_name = true;
       }
@@ -122,35 +110,29 @@ export class RegisterComponent implements OnInit {
       this.error_messages.last_name = true;
     }
 
-    if(!letters.test(this.registerRequest.name)){
+    if(!letters.test(this.currentUser.name)){
       Successful = false;
       this.error_messages.name_not_letter = true;
     }
-    if(!letters.test(this.registerRequest.last_name)){
+    if(!letters.test(this.currentUser.last_name)){
       Successful = false;
       this.error_messages.last_name_not_letter = true;
     }
 
-    if(!letters.test(this.registerRequest.city)){
+    if(!letters.test(this.currentUser.city)){
       Successful = false;
       this.error_messages.city_not_letter = true;
     }
 
-    if(!letters.test(this.registerRequest.country)){
+    if(!letters.test(this.currentUser.country)){
       Successful = false;
       this.error_messages.country_not_letter = true;
     }
 
-    if (!numbers.test(this.registerRequest.telephone)){
+    if (!numbers.test(this.currentUser.telephone)){
       Successful = false;
       this.error_messages.telephone_not_number = true;
     }
-    if (!numbers.test(this.registerRequest.insurance)){
-      Successful = false;
-      this.error_messages.insurance_not_number = true;
-    }
-
-
     return Successful;
 
   }
