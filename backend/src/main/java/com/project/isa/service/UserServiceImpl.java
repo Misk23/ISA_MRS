@@ -100,6 +100,7 @@ public class UserServiceImpl implements UserService {
         if(patientDTO.getLast_name().length() < 3 || patientDTO.getLast_name().length() > 20)
             throw new InvalidDataException("Invalid surname format");
 
+        //TODO Dodati u konstruktor
         registrationRequest.setUsername(patientDTO.getUsername());
         registrationRequest.setPassword(patientDTO.getPassword());
         registrationRequest.setName(patientDTO.getName());
@@ -162,6 +163,7 @@ public class UserServiceImpl implements UserService {
         if(!patient.isPresent()){
             throw new EntityDoesNotExistException("Username not found");
         }
+
         patient.get().setName(patientDTO.getName());
         patient.get().setLast_name(patientDTO.getLast_name());
         patient.get().setAddress(patientDTO.getAddress());

@@ -1,18 +1,18 @@
 package com.project.isa.service;
 
-import com.project.isa.domain.Authority;
-import com.project.isa.domain.Patient;
-import com.project.isa.domain.RegistrationRequest;
-import com.project.isa.domain.UserAuthority;
+import com.project.isa.domain.*;
+import com.project.isa.dto.ClinicAdminDTO;
+import com.project.isa.dto.ClinicDTO;
+import com.project.isa.exceptions.EntityAlreadyExistsException;
 import com.project.isa.exceptions.InvalidDataException;
-import com.project.isa.repository.AuthorityRepository;
-import com.project.isa.repository.PatientRepository;
-import com.project.isa.repository.RegistrationRequestRepository;;
-import com.project.isa.repository.UserAuthorityRepository;
+import com.project.isa.repository.*;
+;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -23,13 +23,23 @@ public class AdminServiceImpl implements AdminService {
     private RegistrationRequestRepository registrationRequestRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private PatientRepository patientRepository;
+
+    @Autowired
+    private ClinicAdminRepository clinicAdminRepository;
 
     @Autowired
     private AuthorityRepository authorityRepository;
 
     @Autowired
+    private ClinicRepository clinicRepository;
+
+    @Autowired
     private UserAuthorityRepository userAuthorityRepository;
+
 
     public ArrayList<RegistrationRequest>  getAllRegistrationRequests(){
         return (ArrayList<RegistrationRequest>)registrationRequestRepository.findAll();
@@ -86,6 +96,73 @@ public class AdminServiceImpl implements AdminService {
 
         registrationRequestRepository.delete(registrationRequest.get());
         patientRepository.save(patient);
-        userAuthorityRepository.save(authorities);
+        //userAuthorityRepository.save(authorities);
+    }
+
+    public void createClinic(ClinicDTO clinicDTO) throws InvalidDataException, EntityAlreadyExistsException{
+
+        if (clinicDTO == null){
+            throw new InvalidDataException("Data is null");
+        }
+
+        if(clinicDTO.getName() == null){
+            throw new InvalidDataException("Name not given");
+        }
+
+        if(clinicRepository.findByName(clinicDTO.getName()).isPresent()){
+            throw new EntityAlreadyExistsException("Clinic with this name already exists");
+        }
+
+        Clinic clinic = new Clinic(clinicDTO);
+        clinicRepository.save(clinic);
+
+    }
+
+    public ArrayList<String> getAllClinicNames(){
+        ArrayList<String> klinike = new ArrayList<String>();
+        for (Clinic klinika : clinicRepository.findAll()){
+            klinike.add(klinika.getName());
+        }
+        return klinike;
+    }
+
+    public void createClinicAdmin(ClinicAdminDTO clinicAdminDTO) throws InvalidDataException, EntityAlreadyExistsException{
+
+        if(clinicAdminDTO == null){
+            throw new InvalidDataException("Data is null");
+        }
+        if (clinicAdminDTO.getUsername() == null){
+            throw new InvalidDataException("There is no username");
+        }
+        if (clinicAdminDTO.getPassword() == null){
+            throw new InvalidDataException("There is no password");
+        }
+
+        if(userRepository.findByUsername(clinicAdminDTO.getUsername()).isPresent()){
+            throw new EntityAlreadyExistsException("Username is taken");
+        }
+
+        ClinicAdmin clinicAdmin = new ClinicAdmin();
+        UserAuthority authorities = new UserAuthority();
+
+        Authority auth = authorityRepository.findByName("CLINIC_ADMIN_ROLE").get();
+        auth.getUserAuthorities().add(authorities);
+        authorities.setAuthority(auth);
+        authorities.setUser(clinicAdmin);
+        System.out.println(authorities.getAuthority().getName());
+        clinicAdmin.getUserAuthorities().add(authorities);
+
+        clinicAdmin.setUsername(clinicAdminDTO.getUsername());
+
+        BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
+        clinicAdmin.setPassword(enc.encode(clinicAdminDTO.getPassword()));
+        System.out.println(enc.encode(clinicAdmin.getPassword()));
+
+        Clinic clinic = clinicRepository.findByName(clinicAdminDTO.getClinic()).get();
+        clinicAdmin.setClinic(clinic);
+        clinic.getClinicAdmins().add(clinicAdmin);
+        clinicRepository.save(clinic);
+        clinicAdminRepository.save(clinicAdmin);
+
     }
 }

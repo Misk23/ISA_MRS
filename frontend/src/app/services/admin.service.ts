@@ -25,11 +25,27 @@ export class AdminService {
 
   approveRegistrationRequest(registrationResponse2){
     var headers: HttpHeaders = new HttpHeaders ({ 'Content-Type': 'application/json' });
-
-    console.log("Dezon");
     
     return this.http.post(this.basePath + '/approve_registration_request', JSON.stringify(registrationResponse2),
     {headers, responseType: 'text' as 'json'});
+  }
+
+  createClinic(clinic){
+    var headers: HttpHeaders = new HttpHeaders ({ 'Content-Type': 'application/json' });
+
+    return this.http.post(this.basePath + '/create_clinic', JSON.stringify(clinic),
+    {headers, responseType: 'text' as 'json'});
+  }
+
+  createClinicAdmin(clinicAdmin){
+    var headers: HttpHeaders = new HttpHeaders ({ 'Content-Type': 'application/json' });
+
+    return this.http.post(this.basePath + '/create_clinic_admin', JSON.stringify(clinicAdmin),
+    {headers, responseType: 'text' as 'json'});
+  }
+
+  getClinics(){
+    return this.http.get(this.basePath + '/get_clinic_names', {responseType: 'json'});
   }
 
   

@@ -1,7 +1,11 @@
 package com.project.isa.controller;
 
+import com.project.isa.domain.Clinic;
 import com.project.isa.domain.RegistrationRequest;
+import com.project.isa.dto.ClinicAdminDTO;
+import com.project.isa.dto.ClinicDTO;
 import com.project.isa.dto.RegistrationResponseDTO;
+import com.project.isa.exceptions.EntityAlreadyExistsException;
 import com.project.isa.exceptions.InvalidDataException;
 import com.project.isa.service.AdminService;
 import com.project.isa.service.EmailService;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.xml.ws.Response;
 import java.util.ArrayList;
 
 @RestController
@@ -55,10 +60,41 @@ public class AdminController {
                     registrationResponseDTO.getEmail());
         }catch (InvalidDataException e){
             e.printStackTrace();
-            return new ResponseEntity<String>("Action failed", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("Registration approval failed", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<String>("Action performed successfully", HttpStatus.OK);
+        return new ResponseEntity<String>("Registration approval successful", HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/create_clinic", method = RequestMethod.POST)
+    public ResponseEntity<String> createClinic(@RequestBody ClinicDTO clinicDTO){
+        try{
+            adminService.createClinic(clinicDTO);
+        }catch (InvalidDataException | EntityAlreadyExistsException e){
+            e.printStackTrace();
+            return new ResponseEntity<String>("Clinic creation failed", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<String>("Clinic creation successful", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/create_clinic_admin", method = RequestMethod.POST)
+    public ResponseEntity<String> createClinicAdmin(@RequestBody ClinicAdminDTO clinicAdminDTO){
+        try{
+            adminService.createClinicAdmin(clinicAdminDTO);
+        }catch (InvalidDataException | EntityAlreadyExistsException e){
+            e.printStackTrace();
+            return new ResponseEntity<String>("Clinic admin creation failed", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<String>("Clinic admin creation successful", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get_clinic_names", method = RequestMethod.GET)
+    public ResponseEntity<ArrayList<String>> getAllClinicNames(){
+        ArrayList<String> clinics = adminService.getAllClinicNames();
+        return new ResponseEntity<ArrayList<String>>(clinics, HttpStatus.OK);
+    }
+
+
+
 
 
 

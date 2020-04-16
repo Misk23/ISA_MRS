@@ -6,6 +6,8 @@
     </div>
     <ul class= "navbar-nav">
       <li class = "nav-item"><a class= "nav-link" *ngIf="isAdmin()" (click)="showAllRegistrationRequests()" id="registration_requests">Registration Requests</a></li>
+      <li class = "nav-item"><a class= "nav-link" *ngIf="isAdmin()" (click)="createClinic()" id="create_clinic">Create Clinic</a></li>
+      <li class = "nav-item"><a class= "nav-link" *ngIf="isAdmin()" (click)="createClinicAdmin()" id="create_clinic_admin">Create Clinic Admin</a></li>
       <li class = "nav-item"><a class= "nav-link" *ngIf="isPatient()" (click)="showPatientProfile()" id="patient_profile">My Profile</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">

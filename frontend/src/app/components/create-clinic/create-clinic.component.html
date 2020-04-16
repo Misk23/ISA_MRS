@@ -1,0 +1,34 @@
+<div class="col-md-9 personal-info">
+    <h3>Create Clinic</h3>
+    <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Name:</label>
+            <div class="col-lg-8">
+                <input class="form-control" type="text" id="name" name="name" [(ngModel)]="clinic.name" required>
+                <p class="alert alert-warning box-msg" *ngIf="error_messages.name" style="color:red">Name must be between 3 and 20 characters..</p>
+                <p class="alert alert-warning box-msg" *ngIf="error_messages.name_not_letter" style="color:red">Please enter valid name</p>
+                <p class="alert alert-warning box-msg" *ngIf="error_messages.name_taken" style="color:red">Name taken</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Address:</label>
+            <div class="col-lg-8">
+                <input class="form-control" type="text" id="address" name="address" [(ngModel)]="clinic.address" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Description:</label>
+            <div class="col-lg-8">
+                <input class="form-control" type="text" id="description" name="description" [(ngModel)]="clinic.description" required>
+            </div>
+          </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label"></label>
+          <div class="col-md-8">
+            <input type="button" class="btn btn-primary" value="Create" (click) = "createClinic()">
+            <span></span>
+          </div>
+        </div>
+    </form>
+  </div>
+  

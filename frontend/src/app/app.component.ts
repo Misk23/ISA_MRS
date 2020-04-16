@@ -50,12 +50,18 @@ export class AppComponent implements OnInit{
     }
   }
   showAllRegistrationRequests(){
-    this.router.navigate(['/registration_requests'])
+    this.router.navigate(['/registration_requests']);
 
   }
   showPatientProfile(){
-    this.router.navigate(['/patient_profile'])
+    this.router.navigate(['/patient_profile']);
 
+  }
+  createClinic(){
+    this.router.navigate(['create_clinic']);
+  }
+  createClinicAdmin(){
+    this.router.navigate(['create_clinic_admin'])
   }
   
 

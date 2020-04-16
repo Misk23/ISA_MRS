@@ -40,6 +40,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			httpSecurity.csrf().disable()
 			.authorizeRequests()
 
+			.antMatchers("/admin/create_clinic").hasAuthority("ADMIN_ROLE")
+			.antMatchers("/admin/create_clinic_admin").hasAuthority("ADMIN_ROLE")
+			.antMatchers("/admin/get_clinic_names").hasAuthority("ADMIN_ROLE")
 			.antMatchers("/admin/approve_registration_request").hasAuthority("ADMIN_ROLE")
 			.antMatchers("/admin/deny_registration_request").hasAuthority("ADMIN_ROLE")
 			.antMatchers("/admin/get_registration_requests").hasAuthority("ADMIN_ROLE")
