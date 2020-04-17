@@ -1,7 +1,5 @@
 package com.project.isa.controller;
 
-
-import com.project.isa.domain.Patient;
 import com.project.isa.dto.LoginDTO;
 import com.project.isa.dto.PatientDTO;
 import com.project.isa.exceptions.EntityAlreadyExistsException;
