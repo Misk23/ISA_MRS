@@ -1,6 +1,8 @@
 package com.project.isa.domain;
 
 
+import org.joda.time.DateTime;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -22,10 +24,19 @@ public class Schedule {
     private int price;
 
     @Column
-    final HashMap<Date, ArrayList<Appointment>> appointmens;
+    private HashMap<String, ArrayList<Appointment>> appointmens;
+
+    public Schedule(){
+
+    }
 
 
-    public Schedule() {
+    public Schedule(Long id, int start, int finish, int price) {
+        this.id = id;
+        this.start = start;
+        this.finish = finish;
+        this.price = price;
+
     }
 
 
@@ -61,7 +72,11 @@ public class Schedule {
         this.price = price;
     }
 
-    public HashMap<Date, ArrayList<Appointment>> getAppointmens() {
+    public HashMap<String, ArrayList<Appointment>> getAppointmens() {
         return appointmens;
+    }
+
+    public void setAppointmens(HashMap<String, ArrayList<Appointment>> appointmens) {
+        this.appointmens = appointmens;
     }
 }

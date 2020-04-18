@@ -1,0 +1,28 @@
+<div class="col-md-9 personal-info">
+    <h3>Create Clinic Admin</h3>
+    <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Username:</label>
+            <div class="col-lg-8">
+                <input class="form-control" type="text" id="username" name="username" [(ngModel)]="doctor.username" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Name:</label>
+            <div class="col-lg-8">
+                <input class="form-control" type="text" id="name" name="name" [(ngModel)]="doctor.name" required>
+            </div>
+          </div>
+          <br>
+          <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
+              <input type="button" class="btn btn-primary" value="Create" (click) = "createDoctor()">
+              <span></span>
+            </div>
+          </div>
+    </form>
+  </div>
+  
+
+

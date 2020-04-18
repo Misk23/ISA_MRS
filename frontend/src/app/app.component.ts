@@ -49,6 +49,14 @@ export class AppComponent implements OnInit{
       return false;
     }
   }
+  isClinicAdmin(){
+    const roles = this.authService.getRoles();
+    if(roles.includes('CLINIC_ADMIN_ROLE')){
+      return true;
+    }else{
+      return false;
+    }
+  }
   showAllRegistrationRequests(){
     this.router.navigate(['/registration_requests']);
 
@@ -62,6 +70,10 @@ export class AppComponent implements OnInit{
   }
   createClinicAdmin(){
     this.router.navigate(['create_clinic_admin'])
+  }
+
+  createDoctor(){
+    this.router.navigate(['create_doctor'])
   }
   
 

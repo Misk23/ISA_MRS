@@ -27,6 +27,7 @@ import { AdminService } from './services/admin.service';
 import { PatientProfileComponent } from './components/patient-profile/patient-profile.component';
 import { CreateClinicComponent } from './components/create-clinic/create-clinic.component';
 import { CreateClinicAdminComponent } from './components/create-clinic-admin/create-clinic-admin.component';
+import { CreateDoctorComponent } from './components/create-doctor/create-doctor.component';
 
 
 const appRoutes: Routes = [
@@ -58,6 +59,10 @@ const appRoutes: Routes = [
   {
     path: 'create_clinic_admin',
     component: CreateClinicAdminComponent
+  },
+  {
+    path: 'create_doctor',
+    component: CreateDoctorComponent
   }
 ]
 
@@ -71,7 +76,8 @@ const appRoutes: Routes = [
     RegistrationRequestsComponent,
     PatientProfileComponent,
     CreateClinicComponent,
-    CreateClinicAdminComponent
+    CreateClinicAdminComponent,
+    CreateDoctorComponent
   ],
   imports: [
     BrowserModule,

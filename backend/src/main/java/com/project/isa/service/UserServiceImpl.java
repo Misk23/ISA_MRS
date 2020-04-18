@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
             throw new InvalidDataException("There is no insurance number");
         }
 
-        if(patientRepository.findByUsername(patientDTO.getUsername()).isPresent()) {
+        if(userRepository.findByUsername(patientDTO.getUsername()).isPresent()) {
             throw new EntityAlreadyExistsException("Username is taken");
         }
 

@@ -6,7 +6,6 @@ import com.project.isa.dto.ClinicDTO;
 import com.project.isa.exceptions.EntityAlreadyExistsException;
 import com.project.isa.exceptions.InvalidDataException;
 import com.project.isa.repository.*;
-;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -155,7 +154,7 @@ public class AdminServiceImpl implements AdminService {
         clinicAdmin.setUsername(clinicAdminDTO.getUsername());
 
         BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
-        clinicAdmin.setPassword(enc.encode(clinicAdminDTO.getPassword()));
+        clinicAdmin.setPassword(enc.encode("admin"));
         System.out.println(enc.encode(clinicAdmin.getPassword()));
 
         Clinic clinic = clinicRepository.findByName(clinicAdminDTO.getClinic()).get();

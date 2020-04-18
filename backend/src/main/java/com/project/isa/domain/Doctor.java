@@ -14,7 +14,7 @@ public class Doctor extends User{
     @Column
     private Specialties specialties;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL)
     private Schedule schedule;
 
     @ManyToOne
@@ -50,5 +50,13 @@ public class Doctor extends User{
 
     public void setSchedule(Schedule schedule) {
         this.schedule = schedule;
+    }
+
+    public Clinic getClinic() {
+        return clinic;
+    }
+
+    public void setClinic(Clinic clinic) {
+        this.clinic = clinic;
     }
 }

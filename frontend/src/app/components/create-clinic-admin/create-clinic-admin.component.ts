@@ -16,6 +16,7 @@ export class CreateClinicAdminComponent implements OnInit {
   constructor(private adminService: AdminService, private router: Router) {
 
     this.clinicAdmin= {};
+    this.clinicAdmin.password = "admin";
     this.error_messages = {};
     this.error_messages.name = false;
     this.error_messages.name_not_letter = false;
