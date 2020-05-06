@@ -1,5 +1,7 @@
 package com.project.isa.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.project.isa.dto.ClinicDTO;
 
@@ -23,13 +25,15 @@ public class Clinic {
     @Column(nullable = false)
     String description;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "clinic", cascade = CascadeType.REMOVE)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "clinic", cascade = CascadeType.ALL)
+    @JsonBackReference
+    List<Doctor> doctors;
+
+    @OneToMany(mappedBy = "clinic", cascade = CascadeType.ALL)
+    @JsonBackReference
     List<ClinicAdmin> clinicAdmins;
 
-    @OneToMany(mappedBy = "clinic", cascade = CascadeType.REMOVE)
-    @JsonManagedReference
-    List<Doctor> doctors;
+
 
 
     public Clinic() {
@@ -47,6 +51,22 @@ public class Clinic {
         this.description = clinicDTO.getDescription();
         this.clinicAdmins = new ArrayList<ClinicAdmin>();
         this.doctors = new ArrayList<Doctor>();
+    }
+
+    public boolean isEligible(String date, String specialties){
+
+        for (Doctor doctor: doctors){
+            if(doctor.getSpecialties().equals(Specialties.valueOf(specialties))){
+                ArrayList<Appointment> appointments = doctor.getSchedule().getAppointmens().get(date);
+                    for(Appointment a: appointments){
+                        if (a.isFree()){
+                            return true;
+                        }
+                    }
+            }
+        }
+
+        return false;
     }
 
     public Long getId() {

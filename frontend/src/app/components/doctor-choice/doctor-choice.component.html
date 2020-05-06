@@ -1,0 +1,65 @@
+
+<div class="col-md-3"></div>
+    <div class="col-sm-10">
+        <h2 class="form-signin-heading">List Of Doctors</h2>
+        <div class="row">
+            <div class="form-group col-xs">
+                <label class="col-lg-3 control-label">Date:</label>
+                <input class="form-control" type="text" placeholder="dd/MM/yyyy" id="search.date" name="search.date" [(ngModel)]="search.date">
+            </div>
+            <div class="form-group col-xs">
+                <label class="col-lg-3 control-label">Specialties:</label>
+                <br>
+                <select id= "specialties" name="specialties" [(ngModel)]="search.specialties" style="display: inline-block" class="ml-1 mb-4">
+                    <option *ngFor="let key of specialtiesTypeOptions" [value]="key" [label]="specialties[key]"></option>
+                  </select>
+            </div>
+            <br><br>
+            <div class="form-group col-xs-2">
+                <br>
+                <button type="button" class="btn btn-primary"  id="search" (click)= "searchOpen()"><i class="far fa-eye">Search</i></button>
+            </div>
+        </div>
+        <table class="table table-striped" id = "mark">
+            <thead>
+                <tr>
+                    <th>  </th>
+                    <th>Name</th>
+                    <th>Specialties</th>
+                    <th>Appointment Price</th>
+                    <th>  </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let doctor of aDoctors; index as i">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ doctor.name}}</td>
+                    <td>{{ doctor.specialties}}</td>
+                    <td>{{ doctor.schedule.price}}</td>
+                    <td><button *ngIf = "searched" type="button" class="btn btn-primary"  id="open" (click) = "onOpen(doctor)"><i class="far fa-eye">Available Appointments</i></button></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="col-md-3"></div>
+            <div class="col-sm-10" *ngIf= "doctorChosen">
+                <h2 class="form-signin-heading">List Of Available Appointments</h2>
+                <table class="table table-striped" id = "mark" >
+                    <thead>
+                        <tr>
+                            <th>  </th>
+                            <th>Start</th>
+                            <th>Finish</th>
+                            <th>  </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let a of chosenDoctor.schedule.appointmens[this.search.date]; index as i" >
+                            <th scope="row" *ngIf = "a.free">{{ i + 1 }}</th>
+                            <td *ngIf = "a.free">{{ a.start}}</td>
+                            <td *ngIf = "a.free">{{ a.finish}}</td>
+                            <td *ngIf = "a.free"> <button type="button" class="btn btn-primary"  id="reserve" (click) = "onReserve(a)"><i class="far fa-eye">Reserve</i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>

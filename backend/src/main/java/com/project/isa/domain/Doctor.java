@@ -1,6 +1,7 @@
 package com.project.isa.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -8,7 +9,7 @@ import javax.persistence.*;
 public class Doctor extends User{
 
 
-    @Column( nullable = false)
+    @Column( nullable = true)
     private String name;
 
     @Column
@@ -17,8 +18,7 @@ public class Doctor extends User{
     @OneToOne(cascade = CascadeType.ALL)
     private Schedule schedule;
 
-    @ManyToOne
-    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     Clinic clinic;
 
     public Doctor() {

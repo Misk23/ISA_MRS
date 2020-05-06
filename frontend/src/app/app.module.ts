@@ -1,5 +1,4 @@
 // Misk
-
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
@@ -28,6 +27,9 @@ import { PatientProfileComponent } from './components/patient-profile/patient-pr
 import { CreateClinicComponent } from './components/create-clinic/create-clinic.component';
 import { CreateClinicAdminComponent } from './components/create-clinic-admin/create-clinic-admin.component';
 import { CreateDoctorComponent } from './components/create-doctor/create-doctor.component';
+import { ShowClinicsComponent } from './components/show-clinics/show-clinics.component';
+import { DoctorChoiceComponent } from './components/doctor-choice/doctor-choice.component';
+import { AvailableAppointmentsComponent } from './component/available-appointments/available-appointments.component';
 
 
 const appRoutes: Routes = [
@@ -63,6 +65,10 @@ const appRoutes: Routes = [
   {
     path: 'create_doctor',
     component: CreateDoctorComponent
+  },
+  {
+    path: 'show_clinics',
+    component: ShowClinicsComponent
   }
 ]
 
@@ -77,7 +83,10 @@ const appRoutes: Routes = [
     PatientProfileComponent,
     CreateClinicComponent,
     CreateClinicAdminComponent,
-    CreateDoctorComponent
+    CreateDoctorComponent,
+    ShowClinicsComponent,
+    DoctorChoiceComponent,
+    AvailableAppointmentsComponent
   ],
   imports: [
     BrowserModule,

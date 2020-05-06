@@ -69,11 +69,14 @@ export class AppComponent implements OnInit{
     this.router.navigate(['create_clinic']);
   }
   createClinicAdmin(){
-    this.router.navigate(['create_clinic_admin'])
+    this.router.navigate(['create_clinic_admin']);
   }
 
   createDoctor(){
-    this.router.navigate(['create_doctor'])
+    this.router.navigate(['create_doctor']);
+  }
+  showClinics(){
+    this.router.navigate(['show_clinics']);
   }
   
 

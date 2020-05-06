@@ -2,36 +2,38 @@ package com.project.isa.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import java.util.ArrayList;
 
 @Entity
 public class Patient extends User {
 
-    @Column
+    @Column(nullable = true, columnDefinition = "DEFAULT NULL")
     private String name;
 
-    @Column
+    @Column(columnDefinition = "varchar(255) default ''")
     private String last_name;
 
-    @Column
+    @Column(columnDefinition = "varchar(255) default ''")
     private String email;
 
-    @Column
+    @Column(columnDefinition = "varchar(255) default ''")
     private String address;
 
-    @Column
+    @Column(columnDefinition = "varchar(255) default ''")
     private String city;
 
-    @Column
+    @Column(columnDefinition = "varchar(255) default ''")
     private String country;
 
-    @Column
+    @Column(columnDefinition = "varchar(255) default ''")
     private String telephone;
 
-    @Column
+    @Column(columnDefinition = "varchar(255) default ''")
     private String insurance;
 
     @Column(nullable = false, columnDefinition = "BOOL DEFAULT FALSE")
     private boolean isVerified;
+
 
     public Patient(){
 

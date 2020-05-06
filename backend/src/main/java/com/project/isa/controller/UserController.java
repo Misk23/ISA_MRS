@@ -1,5 +1,8 @@
 package com.project.isa.controller;
 
+import com.project.isa.domain.Clinic;
+import com.project.isa.domain.Doctor;
+import com.project.isa.dto.AppointmentReservationDTO;
 import com.project.isa.dto.LoginDTO;
 import com.project.isa.dto.PatientDTO;
 import com.project.isa.exceptions.EntityAlreadyExistsException;
@@ -17,6 +20,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -118,6 +123,35 @@ public class UserController {
         return new ResponseEntity<String>("Profile change completed", HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/get_all_clinics", method = RequestMethod.GET)
+    public ResponseEntity<ArrayList<Clinic>> getAllClinics() {
+        try {
+            ArrayList<Clinic> clinics = userService.getAllClinics();
+            return new ResponseEntity<ArrayList<Clinic>>(clinics, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<ArrayList<Clinic>>(new ArrayList<Clinic>(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    @RequestMapping(value = "/get_doctors/{clinic}", method = RequestMethod.GET)
+    public ResponseEntity<ArrayList<Doctor>> getAllClinics(@PathVariable String clinic) {
+        try {
+            ArrayList<Doctor> doctors = userService.getDoctors(clinic);
+            return new ResponseEntity<ArrayList<Doctor>>(doctors, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<ArrayList<Doctor>>(new ArrayList<Doctor>(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "/send_appointment_reservation_request", method = RequestMethod.POST)
+    public ResponseEntity<String> sendAppointmentReservationRequest(@RequestBody AppointmentReservationDTO appointmentReservationDTO){
+        try{
+            userService.sendAppointmentReservationRequest(appointmentReservationDTO);
+        } catch (Exception e){
+            return new ResponseEntity<String>("Invalid appointment reservation request" + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<String>("Successful appointment reservation request", HttpStatus.OK);
+    }
 
 
 

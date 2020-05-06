@@ -9,6 +9,7 @@ public class DoctorDTO {
     private String date_of_creation;
     private int start;
     private int finish;
+    private int duration;
     private int price;
 
     public DoctorDTO(){
@@ -16,7 +17,7 @@ public class DoctorDTO {
     }
 
     public DoctorDTO(String admin, String username, String name, String specialties, String date_of_creation,
-                     int start, int finish, int price) {
+                     int start, int finish, int duration, int price) {
         this.admin = admin;
         this.username = username;
         this.name = name;
@@ -24,6 +25,7 @@ public class DoctorDTO {
         this.date_of_creation = date_of_creation;
         this.start = start;
         this.finish = finish;
+        this.duration = duration;
         this.price = price;
     }
 
@@ -81,6 +83,14 @@ public class DoctorDTO {
 
     public void setFinish(int finish) {
         this.finish = finish;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public int getPrice() {

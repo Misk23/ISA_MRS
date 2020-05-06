@@ -1,22 +1,20 @@
 package com.project.isa.service;
 
 
-import com.project.isa.domain.Patient;
-import com.project.isa.domain.RegistrationRequest;
-import com.project.isa.domain.User;
+import com.project.isa.domain.*;
+import com.project.isa.dto.AppointmentReservationDTO;
 import com.project.isa.dto.PatientDTO;
 import com.project.isa.exceptions.EntityAlreadyExistsException;
 import com.project.isa.exceptions.EntityDoesNotExistException;
 import com.project.isa.exceptions.InvalidDataException;
-import com.project.isa.repository.AuthorityRepository;
-import com.project.isa.repository.PatientRepository;
-import com.project.isa.repository.RegistrationRequestRepository;
-import com.project.isa.repository.UserRepository;
+import com.project.isa.repository.*;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Optional;
 
@@ -30,7 +28,16 @@ public class UserServiceImpl implements UserService {
     private PatientRepository patientRepository;
 
     @Autowired
+    private ClinicRepository clinicRepository;
+
+    @Autowired
+    private DoctorRepository doctorRepository;
+
+    @Autowired
     private AuthorityRepository authorityRepository;
+
+    @Autowired
+    private ExamRepository examRepository;
 
     @Autowired
     private RegistrationRequestRepository registrationRequestRepository;
@@ -179,6 +186,47 @@ public class UserServiceImpl implements UserService {
 
         patientRepository.save(patient.get());
         return true;
+    }
+
+    public ArrayList<Clinic> getAllClinics(){
+        return (ArrayList<Clinic>)clinicRepository.findAll();
+    }
+
+    public ArrayList<Doctor> getDoctors(String name){
+        long clinic_id = clinicRepository.findByName(name).get().getId();
+        ArrayList<Doctor> doctors = (ArrayList<Doctor>) doctorRepository.findAll();
+        ArrayList<Doctor> doctors1 = new ArrayList<Doctor>();
+        for (Doctor d: doctors){
+            if(clinic_id == d.getClinic().getId()){
+                doctors1.add(d);
+            }
+        }
+        return  doctors1;
+    }
+
+    public void sendAppointmentReservationRequest(AppointmentReservationDTO appointmentReservationDTO){
+        System.out.println("Evo me");
+
+        Exam exam = new Exam();
+        exam.setClinic(appointmentReservationDTO.getClinic());
+        exam.setDoctor(appointmentReservationDTO.getDoctor());
+        exam.setDate(appointmentReservationDTO.getDate());
+        exam.setStart(appointmentReservationDTO.getStart());
+        exam.setFinish(appointmentReservationDTO.getFinish());
+        exam.setPrice(appointmentReservationDTO.getPrice());
+
+        Doctor doctor = doctorRepository.findByName(appointmentReservationDTO.getDoctor()).get();
+
+        for (Appointment a: doctor.getSchedule().getAppointmens().get(appointmentReservationDTO.getDate())) {
+            if (a.getStart().equals(appointmentReservationDTO.getStart())){
+                a.setFree(false);
+            }
+        }
+
+        System.out.println(appointmentReservationDTO.getFinish());
+        doctorRepository.save(doctor);
+        examRepository.save(exam);
+
     }
 
 

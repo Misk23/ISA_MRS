@@ -23,6 +23,8 @@
     "@ng-bootstrap/ng-bootstrap": "^6.0.2",
     "bootstrap": "^4.4.1",
     "jquery": "^3.4.1",
+    "mydatepicker": "^2.6.10",
+    "primeng": "^9.0.5",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

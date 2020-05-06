@@ -34,4 +34,19 @@ export class UserService {
           {headers, responseType: 'text' as 'json'});
    }
 
+   getClinics(){
+    return this.http.get(this.basePath + '/get_all_clinics', {responseType: 'json'});
+  }
+
+  getDoctors(clinic: string){
+    return this.http.get(this.basePath + '/get_doctors/' + clinic, {responseType: 'json'});
+  }
+
+  sendAppointmentReservationRequest(reservationRequest){
+    var headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    
+    return this.http.post(this.basePath + "/send_appointment_reservation_request", JSON.stringify(reservationRequest),
+           {headers, responseType : 'text' as 'json'} );
+  }
+
 }

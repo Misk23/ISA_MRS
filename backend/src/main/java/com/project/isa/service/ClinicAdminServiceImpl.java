@@ -63,7 +63,7 @@ public class ClinicAdminServiceImpl implements ClinicAdminService {
         DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy");
         DateTimeFormatter fmt2 = DateTimeFormat.forPattern("HH:mm");
 
-        int minutes = 30;
+        int minutes = doctorDTO.getDuration();
 
         try {
             scheduleStart = sdf.parse(doctorDTO.getDate_of_creation());
@@ -75,13 +75,16 @@ public class ClinicAdminServiceImpl implements ClinicAdminService {
 
 
 
-        for (int i = 1; i < 366; ++i){
+        for (int i = 0; i < 365; ++i){
             ArrayList<Appointment> aList = new ArrayList<Appointment>();
 
             DateTime aStart = dtStart.plusHours(schedule.getStart());
             DateTime aFinish = dtStart.plusHours(schedule.getFinish());
 
-            int j = 0;
+            if(schedule.getFinish()<schedule.getStart()){
+                aFinish = aFinish.plusDays(1);
+            }
+
             while(aFinish.isAfter(aStart)){
                 Appointment a = new Appointment();
                 a.setStart(fmt2.print(aStart));
@@ -90,11 +93,11 @@ public class ClinicAdminServiceImpl implements ClinicAdminService {
                 a.setFree(true);
                 aList.add(a);
             }
-            System.out.println(fmt.print(dtStart.plusDays(i)));
+            //System.out.println(fmt.print(dtStart.plusDays(i)));
             for (Appointment a: aList){
-                System.out.println(a.getStart());
-                System.out.println(a.getFinish());
-                System.out.println(a.isFree());
+                //System.out.println(a.getStart());
+                //System.out.println(a.getFinish());
+                //System.out.println(a.isFree());
             }
             appointments.put(fmt.print(dtStart.plusDays(i)), aList);
         }
@@ -111,7 +114,7 @@ public class ClinicAdminServiceImpl implements ClinicAdminService {
         clinic.getDoctors().add(doctor);
         doctor.setClinic(clinic);
 
-        clinicRepository.save(clinic);
+        //clinicRepository.save(clinic);
         doctorRepository.save(doctor);
     }
 }

@@ -160,7 +160,7 @@ public class AdminServiceImpl implements AdminService {
         Clinic clinic = clinicRepository.findByName(clinicAdminDTO.getClinic()).get();
         clinicAdmin.setClinic(clinic);
         clinic.getClinicAdmins().add(clinicAdmin);
-        clinicRepository.save(clinic);
+        //clinicRepository.save(clinic);
         clinicAdminRepository.save(clinicAdmin);
 
     }
