@@ -9,9 +9,11 @@
       <li class = "nav-item"><a class= "nav-link" *ngIf="isAdmin()" (click)="createClinicAdmin()" id="create_clinic_admin">Create Clinic Admin</a></li>
       <li class = "nav-item"><a class= "nav-link" *ngIf="isClinicAdmin()" (click)="createDoctor()" id="create_doctor">Create Doctor</a></li>
       <li class = "nav-item"><a class= "nav-link" *ngIf="isClinicAdmin()" (click)="makePredefinedAppointment()" id="make_predefined_appointment">Make Predefined Appointment</a></li>
+      <li class = "nav-item"><a class= "nav-link" *ngIf="isDoctor()" (click)="concludeExam()" id="conclude_exam">Conclude Exam</a></li>
       <li class = "nav-item"><a class= "nav-link" *ngIf="isPatient()" (click)="showPatientProfile()" id="patient_profile">My Profile</a></li>
       <li class = "nav-item"><a class= "nav-link" *ngIf="isPatient()" (click)="showClinics()" id="show_clinics">All Clinics</a></li>
       <li class = "nav-item"><a class= "nav-link" *ngIf="isPatient()" (click)="showExamHistory()" id="show_exam_history">My Exams</a></li>
+      <li class = "nav-item"><a class= "nav-link" *ngIf="isPatient()" (click)="showMedicalHistory()" id="show_medical_history">My Medical History</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a *ngIf="!loggedIn()" href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>

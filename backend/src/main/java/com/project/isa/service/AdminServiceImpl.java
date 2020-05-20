@@ -89,6 +89,12 @@ public class AdminServiceImpl implements AdminService {
         patient.setVerified(false);
 
 
+        patient.setMedicalHistory(new MedicalHistory());
+
+        /*patient.getMedicalHistory().getDates().add("prvi datum");
+        patient.getMedicalHistory().getDiagnose().add("prva bolest");
+        patient.getMedicalHistory().getTherapy().add("prva terapija");*/
+
 
         BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
 

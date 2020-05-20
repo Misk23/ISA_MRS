@@ -1,0 +1,30 @@
+<div class="col-md-3"></div>
+    <div class="col-sm-10">
+        <h2 class="form-signin-heading">Unconcluded Exams</h2>
+        <table class="table table-striped" id = "mark">
+            <thead>
+                <tr>
+                    <th>  </th>
+                    <th>Date</th>
+                    <th>Patient</th>
+                    <th>Start</th>
+                    <th>Finish</th>
+                    <th>Diagnose</th>
+                    <th>Therapy</th>
+                    <th>  </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let exam of uncloncludedExams; index as i">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ exam.date }}</td>
+                    <td>{{ exam.patient }}</td>
+                    <td>{{ exam.start }}</td>
+                    <td>{{ exam.finish }}</td>
+                    <td><textarea class="form-control" id="exampleFormControlTextarea1" rows="2" placeholder="Diagnose user" #diagnoseInput></textarea></td>>
+                    <td><textarea class="form-control" id="exampleFormControlTextarea1" rows="4" placeholder="Write therapy for user" #therapyInput></textarea></td>>
+                    <td><button type="button" class="btn btn-primary"  id="conclude" (click) = "onConclude(diagnoseInput.value, therapyInput.value, exam)"><i class="far fa-eye">Conclude</i></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>

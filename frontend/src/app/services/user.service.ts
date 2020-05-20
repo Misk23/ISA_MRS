@@ -68,4 +68,8 @@ export class UserService {
            {headers, responseType : 'text' as 'json'} );
   }
 
+  getMedicalHistory(username){
+    return this.http.get(this.basePath + '/my_medical_history/'+ username, {responseType: 'json'})
+  }
+
 }

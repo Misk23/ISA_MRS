@@ -3,6 +3,7 @@ package com.project.isa.controller;
 import com.project.isa.domain.Clinic;
 import com.project.isa.domain.Doctor;
 import com.project.isa.domain.Exam;
+import com.project.isa.domain.MedicalHistory;
 import com.project.isa.dto.AppointmentReservationDTO;
 import com.project.isa.dto.LoginDTO;
 import com.project.isa.dto.PatientDTO;
@@ -139,6 +140,7 @@ public class UserController {
             return new ResponseEntity<ArrayList<Clinic>>(new ArrayList<Clinic>(), HttpStatus.BAD_REQUEST);
         }
     }
+
     @RequestMapping(value = "/get_doctors/{clinic}", method = RequestMethod.GET)
     public ResponseEntity<ArrayList<Doctor>> getAllClinics(@PathVariable String clinic) {
         try {
@@ -199,6 +201,16 @@ public class UserController {
         }
 
         return new ResponseEntity<String>("Successful predefined reservation", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/my_medical_history/{username}", method = RequestMethod.GET)
+    public ResponseEntity<MedicalHistory> getMedicalHistory(@PathVariable String username){
+        try{
+            MedicalHistory medicalHistory = userService.getMedicalHistory(username);
+            return new ResponseEntity<MedicalHistory>(medicalHistory, HttpStatus.OK);
+        }catch (EntityDoesNotExistException e){
+            return new ResponseEntity<MedicalHistory>(new MedicalHistory(), HttpStatus.BAD_REQUEST);
+        }
     }
 
 

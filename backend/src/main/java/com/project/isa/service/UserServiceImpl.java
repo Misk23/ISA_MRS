@@ -282,4 +282,18 @@ public class UserServiceImpl implements UserService {
         exam.setPatient(reservePredefinedDTO.getUsername());
         examRepository.save(exam);
     }
+
+    public MedicalHistory getMedicalHistory(String username) throws EntityDoesNotExistException{
+
+        if(!userRepository.findByUsername(username).isPresent()){
+            throw new EntityDoesNotExistException("There is no user with given username");
+        }
+
+        Patient patient = (Patient) userRepository.findByUsername(username).get();
+
+        System.out.println(patient.getMedicalHistory().getDates());
+        System.out.println(patient.getMedicalHistory().getDiagnose());
+        System.out.println(patient.getMedicalHistory().getTherapy());
+        return patient.getMedicalHistory();
+    }
 }

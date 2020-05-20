@@ -1,0 +1,23 @@
+<div class="col-md-3"></div>
+    <div class="col-sm-10">
+        <h2 class="form-signin-heading">My Medical History</h2>
+        <table class="table table-striped" id = "mark">
+            <thead>
+                <tr>
+                    <th>  </th>
+                    <th>Date</th>
+                    <th>Diagnose</th>
+                    <th>Therapy</th>
+                    <th>  </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let date of medicalHistory.dates; index as i">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ medicalHistory.dates[i]}}</td>
+                    <td>{{ medicalHistory.diagnose[i]}}</td>
+                    <td>{{ medicalHistory.therapy[i]}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>

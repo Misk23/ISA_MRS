@@ -6,6 +6,7 @@ import com.project.isa.dto.DoctorDTO;
 import com.project.isa.exceptions.EntityAlreadyExistsException;
 import com.project.isa.exceptions.EntityDoesNotExistException;
 import com.project.isa.exceptions.InvalidDataException;
+import com.project.isa.repository.AuthorityRepository;
 import com.project.isa.repository.ClinicRepository;
 import com.project.isa.repository.DoctorRepository;
 import com.project.isa.repository.UserRepository;
@@ -32,6 +33,9 @@ public class ClinicAdminServiceImpl implements ClinicAdminService {
 
     @Autowired
     private DoctorRepository doctorRepository;
+
+    @Autowired
+    private AuthorityRepository authorityRepository;
 
 
     public void createDoctor(DoctorDTO doctorDTO) throws EntityAlreadyExistsException, InvalidDataException{
@@ -107,6 +111,14 @@ public class ClinicAdminServiceImpl implements ClinicAdminService {
         doctor.setSchedule(schedule);
 
         doctor.setUsername(doctorDTO.getUsername());
+
+        UserAuthority authorities = new UserAuthority();
+        Authority auth = authorityRepository.findByName("DOCTOR_ROLE").get();
+        auth.getUserAuthorities().add(authorities);
+        authorities.setAuthority(auth);
+        authorities.setUser(doctor);
+        doctor.getUserAuthorities().add(authorities);
+
 
         BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
         doctor.setPassword(enc.encode("doctor"));

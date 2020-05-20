@@ -1,9 +1,6 @@
 package com.project.isa.service;
 
-import com.project.isa.domain.Clinic;
-import com.project.isa.domain.Doctor;
-import com.project.isa.domain.Exam;
-import com.project.isa.domain.Patient;
+import com.project.isa.domain.*;
 import com.project.isa.dto.AppointmentReservationDTO;
 import com.project.isa.dto.PatientDTO;
 import com.project.isa.dto.ReservePredefinedDTO;
@@ -39,4 +36,6 @@ public interface UserService {
     ArrayList<Exam> getPredefinedExams(String clinic) throws EntityDoesNotExistException;
 
     void reservePredefined(ReservePredefinedDTO reservePredefinedDTO);
+
+    MedicalHistory getMedicalHistory(String username) throws EntityDoesNotExistException;
 }

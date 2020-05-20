@@ -1,5 +1,7 @@
 package com.project.isa.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +21,7 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<UserAuthority> userAuthorities = new HashSet<UserAuthority>();
 
     public User() {

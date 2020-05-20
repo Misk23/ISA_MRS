@@ -11,4 +11,5 @@ public interface ExamRepository extends JpaRepository<Exam, Long> {
     Optional<Exam> findById(Long id);
     ArrayList<Exam> findAllByPatient(String patient);
     ArrayList<Exam> findAllByClinicAndPatient(String clinic, String patient);
+    ArrayList<Exam> findAllByDoctor(String doctor);
 }

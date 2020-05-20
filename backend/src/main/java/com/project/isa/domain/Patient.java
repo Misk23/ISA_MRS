@@ -1,9 +1,6 @@
 package com.project.isa.domain;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 
 @Entity
@@ -36,6 +33,9 @@ public class Patient extends User {
     @Column(nullable = false, columnDefinition = "BOOL DEFAULT FALSE")
     private boolean isVerified;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private MedicalHistory medicalHistory;
+
 
     public Patient(){
 
@@ -52,6 +52,7 @@ public class Patient extends User {
         this.telephone = telephone;
         this.insurance = insurance;
         this.isVerified = isVerified;
+        this.medicalHistory = new MedicalHistory();
     }
 
     public String getName() {
@@ -126,4 +127,11 @@ public class Patient extends User {
         isVerified = verified;
     }
 
+    public MedicalHistory getMedicalHistory() {
+        return medicalHistory;
+    }
+
+    public void setMedicalHistory(MedicalHistory medicalHistory) {
+        this.medicalHistory = medicalHistory;
+    }
 }

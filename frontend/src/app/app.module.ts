@@ -32,6 +32,8 @@ import { DoctorChoiceComponent } from './components/doctor-choice/doctor-choice.
 import { AvailableAppointmentsComponent } from './component/available-appointments/available-appointments.component';
 import { ExamHistoryComponent } from './components/exam-history/exam-history.component';
 import { PredefinedAppointmentComponent } from './components/predefined-appointment/predefined-appointment.component';
+import { MedicalHistoryComponent } from './components/medical-history/medical-history.component';
+import { ConcludeExamComponent } from './components/conclude-exam/conclude-exam.component';
 
 
 const appRoutes: Routes = [
@@ -79,6 +81,13 @@ const appRoutes: Routes = [
   {
     path: 'predefined_appointment',
     component: PredefinedAppointmentComponent
+  },
+  {
+    path: 'my_medical_history',
+    component: MedicalHistoryComponent
+  },{
+    path: 'conclude_exam',
+    component: ConcludeExamComponent
   }
 ]
 
@@ -98,7 +107,9 @@ const appRoutes: Routes = [
     DoctorChoiceComponent,
     AvailableAppointmentsComponent,
     ExamHistoryComponent,
-    PredefinedAppointmentComponent
+    PredefinedAppointmentComponent,
+    MedicalHistoryComponent,
+    ConcludeExamComponent
   ],
   imports: [
     BrowserModule,

@@ -62,6 +62,14 @@ export class AppComponent implements OnInit{
       return false;
     }
   }
+  isDoctor(){
+    const roles = this.authService.getRoles();
+    if(roles.includes('DOCTOR_ROLE')){
+      return true;
+    }else{
+      return false;
+    }
+  }
   showAllRegistrationRequests(){
     this.router.navigate(['/registration_requests']);
 
@@ -89,6 +97,13 @@ export class AppComponent implements OnInit{
   makePredefinedAppointment(){
     this.router.navigate(['predefined_appointment']);
   }
+  showMedicalHistory(){
+    this.router.navigate(['my_medical_history']);
+  }
+  concludeExam(){
+    this.router.navigate(['conclude_exam']);
+  }
+  
   
 
 

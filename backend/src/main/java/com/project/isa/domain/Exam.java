@@ -31,6 +31,9 @@ public class Exam {
     @Column
     private String price;
 
+    @Column
+    private boolean concluded;
+
 
     public Exam() {
     }
@@ -97,5 +100,13 @@ public class Exam {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public boolean isConcluded() {
+        return concluded;
+    }
+
+    public void setConcluded(boolean concluded) {
+        this.concluded = concluded;
     }
 }
