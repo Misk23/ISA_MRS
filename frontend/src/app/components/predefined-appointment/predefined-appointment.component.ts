@@ -4,19 +4,19 @@ import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
 import { UserService } from 'src/app/services/user.service';
 import { AuthenticationService } from 'src/app/services/security/authentication-service.service';
+import { ClinicAdminService } from 'src/app/services/clinic-admin.service';
 
 enum Specialties{
   INTERNAL_MEDICINE = 'INTERNAL_MEDICINE',
   SURGERY = 'SURGERY',
   PEDIATRICS = 'PEDIATRICS'
 }
-
 @Component({
-  selector: 'app-doctor-choice',
-  templateUrl: './doctor-choice.component.html',
-  styleUrls: ['./doctor-choice.component.css']
+  selector: 'app-predefined-appointment',
+  templateUrl: './predefined-appointment.component.html',
+  styleUrls: ['./predefined-appointment.component.css']
 })
-export class DoctorChoiceComponent implements OnInit {
+export class PredefinedAppointmentComponent implements OnInit {
 
   public specialties = Specialties;
   public specialtiesTypeOptions;
@@ -30,17 +30,13 @@ export class DoctorChoiceComponent implements OnInit {
   public search;
   public aDoctors;
 
-  constructor(private transferService: TransferService, public router:Router,
+  constructor(private clinicAdminService: ClinicAdminService, public router:Router,
               private userService: UserService, private authService: AuthenticationService) {
 
     this.reservationRequest = {};
+    this.search = {};
 
-    this.transferService.currentMessage.subscribe(message => {
-      this.clinic = message;
-      this.aDoctors = this.clinic.doctors;
-      this.doctorChosen = false;
-      this.search = {};
-      this.searched = false;});
+    
 
     
     
@@ -49,6 +45,17 @@ export class DoctorChoiceComponent implements OnInit {
 
   ngOnInit(): void {
     this.specialtiesTypeOptions = Object.keys(this.specialties);
+    this.clinicAdminService.getClinic(this.authService.getCurrentUser().username).subscribe(success => {this.setClinic(success)});
+  }
+
+  setClinic(data){
+
+    this.clinic = data;
+    this.userService.getDoctors(data.name).subscribe(success => {
+      this.aDoctors = success;
+    });
+
+
   }
 
   searchOpen(){
@@ -83,7 +90,7 @@ export class DoctorChoiceComponent implements OnInit {
 
     this.reservationRequest.clinic = this.chosenDoctor.clinic.name;
     this.reservationRequest.doctor = this.chosenDoctor.name;
-    this.reservationRequest.patient = this.authService.getCurrentUser().username;
+    this.reservationRequest.patient = "PREDEFINED";
     this.reservationRequest.date = this.search.date;
     this.reservationRequest.start = a.start;
     this.reservationRequest.finish = a.finish;

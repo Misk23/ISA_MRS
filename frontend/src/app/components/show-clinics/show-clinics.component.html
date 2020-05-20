@@ -18,12 +18,42 @@
                     <td>{{ clinic.address}}</td>
                     <td>{{ clinic.description}}</td>
                     <td><button type="button" class="btn btn-primary"  id="open" (click) = "onOpen(clinic)"><i class="far fa-eye">Show all doctors</i></button></td>
-                    <td><button type="button" class="btn btn-primary"  id="open" ><i class="far fa-eye">Premade appointments</i></button></td>
+                    <td><button type="button" class="btn btn-primary"  id="open_predefined" (click) = "openPredefined(clinic)"><i class="far fa-eye">Predefined appointments</i></button></td>
                 </tr>
             </tbody>
         </table>
         <app-doctor-choice *ngIf="clinicChosen">
 
         </app-doctor-choice>
+    </div>
+    <div class="col-md-3"></div>
+    <div class="col-sm-10" *ngIf ="pred_chosen">
+        <h2 class="form-signin-heading">Predefined Exams</h2>
+        <table class="table table-striped" id = "mark">
+            <thead>
+                <tr>
+                    <th>  </th>
+                    <th>Clinic</th>
+                    <th>Date</th>
+                    <th>Doctor</th>
+                    <th>Start</th>
+                    <th>Finish</th>
+                    <th>Price</th>
+                    <th>  </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let exam of predefined_exams; index as i">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ exam.clinic}}</td>
+                    <td>{{ exam.date}}</td>
+                    <td>{{ exam.doctor}}</td>
+                    <td>{{ exam.start}}</td>
+                    <td>{{ exam.finish}}</td>
+                    <td>{{ exam.price}}</td>
+                    <td><button type="button" class="btn btn-primary"  id="reserve_predefined" (click) = "onReservePredefined(exam.id)"><i class="far fa-eye">Reserve Predefined</i></button></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     

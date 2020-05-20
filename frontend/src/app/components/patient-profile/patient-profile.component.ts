@@ -12,6 +12,7 @@ export class PatientProfileComponent implements OnInit {
 
   public currentUser;
   public error_messages;
+  public changedPassword;
   
 
   constructor(private authService: AuthenticationService, private userService: UserService, private router: Router) { 
@@ -27,6 +28,7 @@ export class PatientProfileComponent implements OnInit {
     this.error_messages.last_name_not_letter = false;
     this.error_messages.city_not_letter = false;
     this.error_messages.country_not_letter = false;
+    this.changedPassword = "";
   }
 
   ngOnInit(): void {
@@ -41,6 +43,10 @@ export class PatientProfileComponent implements OnInit {
 
     if(!this.validateForm())
       return;
+
+    if(this.changedPassword != ""){
+      this.currentUser.password = this.changedPassword;
+    }
 
     
     this.userService.updateProfile(this.currentUser).subscribe(success => {
@@ -70,24 +76,24 @@ export class PatientProfileComponent implements OnInit {
 
     var Successful = true;
     
-    if (this.currentUser.password != undefined){
-      if(this.currentUser.password.length < 3 || this.currentUser.password.length >20){
+    if (this.changedPassword != undefined){
+      if(this.changedPassword.length < 3 || this.changedPassword.length >20){
         Successful = false;
         this.error_messages.password = true;
       }
     } else{
-      Successful = false;
-      this.error_messages.password = true;
+      Successful = true;
+      //this.error_messages.password = true;
     }
 
     if (this.currentUser.confirm_password != undefined){
-      if(this.currentUser.password != this.currentUser.confirm_password){
+      if(this.changedPassword != this.currentUser.confirm_password){
         Successful = false;
         this.error_messages.confirm_password = true;
       }
     }else{
-      Successful = false;
-      this.error_messages.confirm_password = true;
+      Successful = true;
+      //this.error_messages.confirm_password = true;
     }
 
     if (this.currentUser.name != undefined){

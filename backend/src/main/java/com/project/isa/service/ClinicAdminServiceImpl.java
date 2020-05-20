@@ -4,6 +4,7 @@ package com.project.isa.service;
 import com.project.isa.domain.*;
 import com.project.isa.dto.DoctorDTO;
 import com.project.isa.exceptions.EntityAlreadyExistsException;
+import com.project.isa.exceptions.EntityDoesNotExistException;
 import com.project.isa.exceptions.InvalidDataException;
 import com.project.isa.repository.ClinicRepository;
 import com.project.isa.repository.DoctorRepository;
@@ -116,5 +117,20 @@ public class ClinicAdminServiceImpl implements ClinicAdminService {
 
         //clinicRepository.save(clinic);
         doctorRepository.save(doctor);
+    }
+
+    public Clinic getClinic(String username) throws EntityDoesNotExistException{
+
+        if(!userRepository.findByUsername(username).isPresent()){
+            throw new EntityDoesNotExistException("Nema ovog admina");
+        }
+
+        ClinicAdmin clinicAdmin = (ClinicAdmin) userRepository.findByUsername(username).get();
+        System.out.println(clinicAdmin.getClinic().getId());
+        System.out.println(clinicAdmin.getClinic().getName());
+        System.out.println(clinicAdmin.getClinic().getAddress());
+        System.out.println(clinicAdmin.getClinic().getDescription());
+        return clinicRepository.findByName(clinicAdmin.getClinic().getName()).get();
+
     }
 }

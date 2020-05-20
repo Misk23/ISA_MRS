@@ -2,13 +2,16 @@ package com.project.isa.service;
 
 import com.project.isa.domain.Clinic;
 import com.project.isa.domain.Doctor;
+import com.project.isa.domain.Exam;
 import com.project.isa.domain.Patient;
 import com.project.isa.dto.AppointmentReservationDTO;
 import com.project.isa.dto.PatientDTO;
+import com.project.isa.dto.ReservePredefinedDTO;
 import com.project.isa.exceptions.EntityAlreadyExistsException;
 import com.project.isa.exceptions.EntityDoesNotExistException;
 import com.project.isa.exceptions.InvalidDataException;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public interface UserService {
@@ -28,4 +31,12 @@ public interface UserService {
     ArrayList<Doctor> getDoctors(String name);
 
     void sendAppointmentReservationRequest(AppointmentReservationDTO appointmentReservationDTO);
+
+    ArrayList<Exam> getMyExams(String patient) throws EntityDoesNotExistException;
+
+    void cancelAppointment(Long id) throws EntityDoesNotExistException;
+
+    ArrayList<Exam> getPredefinedExams(String clinic) throws EntityDoesNotExistException;
+
+    void reservePredefined(ReservePredefinedDTO reservePredefinedDTO);
 }

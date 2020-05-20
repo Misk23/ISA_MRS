@@ -30,6 +30,8 @@ import { CreateDoctorComponent } from './components/create-doctor/create-doctor.
 import { ShowClinicsComponent } from './components/show-clinics/show-clinics.component';
 import { DoctorChoiceComponent } from './components/doctor-choice/doctor-choice.component';
 import { AvailableAppointmentsComponent } from './component/available-appointments/available-appointments.component';
+import { ExamHistoryComponent } from './components/exam-history/exam-history.component';
+import { PredefinedAppointmentComponent } from './components/predefined-appointment/predefined-appointment.component';
 
 
 const appRoutes: Routes = [
@@ -69,6 +71,14 @@ const appRoutes: Routes = [
   {
     path: 'show_clinics',
     component: ShowClinicsComponent
+  },
+  {
+    path: 'my_exams',
+    component: ExamHistoryComponent
+  },
+  {
+    path: 'predefined_appointment',
+    component: PredefinedAppointmentComponent
   }
 ]
 
@@ -86,7 +96,9 @@ const appRoutes: Routes = [
     CreateDoctorComponent,
     ShowClinicsComponent,
     DoctorChoiceComponent,
-    AvailableAppointmentsComponent
+    AvailableAppointmentsComponent,
+    ExamHistoryComponent,
+    PredefinedAppointmentComponent
   ],
   imports: [
     BrowserModule,

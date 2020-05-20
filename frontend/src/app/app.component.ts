@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from './services/security/authentication-service.service'
+import { UserService } from './services/user.service';
 
 
 @Component({
@@ -12,11 +13,15 @@ import { AuthenticationService } from './services/security/authentication-servic
 export class AppComponent implements OnInit{
   title = 'frontend';
 
-  constructor(private authService: AuthenticationService, public router: Router){
+  constructor(private userService: UserService,
+              private authService: AuthenticationService, public router: Router){
+
 
   }
 
   ngOnInit(){
+
+    
 
   }
 
@@ -77,6 +82,12 @@ export class AppComponent implements OnInit{
   }
   showClinics(){
     this.router.navigate(['show_clinics']);
+  }
+  showExamHistory(){
+    this.router.navigate(['my_exams']);
+  }
+  makePredefinedAppointment(){
+    this.router.navigate(['predefined_appointment']);
   }
   
 

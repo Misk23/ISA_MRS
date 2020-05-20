@@ -9,7 +9,7 @@
           <div class="form-group">
             <label class="col-md-3 control-label">New Password:</label>
             <div class="col-md-8">
-                 <input class="form-control" type="password" id="password" name="password" [(ngModel)]="currentUser.password">
+                 <input class="form-control" type="password" id="password" name="password" [(ngModel)]="changedPassword">
                  <p class="alert alert-warning box-msg" *ngIf="error_messages.password" style="color:red">Password must be between 3 and 20 characters...</p>
             </div>
           </div>

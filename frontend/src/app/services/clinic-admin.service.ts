@@ -18,4 +18,8 @@ export class ClinicAdminService {
     return this.http.post(this.basePath + '/create_doctor', JSON.stringify(doctor),
     {headers, responseType: 'text' as 'json'});
   }
+
+  getClinic(username){
+    return this.http.get(this.basePath + '/get_clinic/'+username, {responseType: 'json'});
+  }
 }

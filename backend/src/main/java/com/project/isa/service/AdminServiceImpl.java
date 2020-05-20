@@ -88,6 +88,8 @@ public class AdminServiceImpl implements AdminService {
         patient.setInsurance(registrationRequest.get().getTelephone());
         patient.setVerified(false);
 
+
+
         BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
 
         patient.setPassword(enc.encode(registrationRequest.get().getPassword()));

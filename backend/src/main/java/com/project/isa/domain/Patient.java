@@ -1,7 +1,9 @@
 package com.project.isa.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 
 @Entity
@@ -123,4 +125,5 @@ public class Patient extends User {
     public void setVerified(boolean verified) {
         isVerified = verified;
     }
+
 }

@@ -4,6 +4,7 @@ package com.project.isa.service;
 import com.project.isa.domain.*;
 import com.project.isa.dto.AppointmentReservationDTO;
 import com.project.isa.dto.PatientDTO;
+import com.project.isa.dto.ReservePredefinedDTO;
 import com.project.isa.exceptions.EntityAlreadyExistsException;
 import com.project.isa.exceptions.EntityDoesNotExistException;
 import com.project.isa.exceptions.InvalidDataException;
@@ -207,6 +208,8 @@ public class UserServiceImpl implements UserService {
     public void sendAppointmentReservationRequest(AppointmentReservationDTO appointmentReservationDTO){
         System.out.println("Evo me");
 
+        System.out.println(appointmentReservationDTO.getPatient());
+
         Exam exam = new Exam();
         exam.setClinic(appointmentReservationDTO.getClinic());
         exam.setDoctor(appointmentReservationDTO.getDoctor());
@@ -214,6 +217,10 @@ public class UserServiceImpl implements UserService {
         exam.setStart(appointmentReservationDTO.getStart());
         exam.setFinish(appointmentReservationDTO.getFinish());
         exam.setPrice(appointmentReservationDTO.getPrice());
+        exam.setPatient(appointmentReservationDTO.getPatient());
+
+
+
 
         Doctor doctor = doctorRepository.findByName(appointmentReservationDTO.getDoctor()).get();
 
@@ -229,5 +236,50 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    public ArrayList<Exam> getMyExams(String patient) throws EntityDoesNotExistException{
 
+        if(!patientRepository.findByUsername(patient).isPresent())
+            throw new EntityDoesNotExistException("Nema tog pacijenta");
+
+        return examRepository.findAllByPatient(patient);
+    }
+
+    public void cancelAppointment(Long id) throws EntityDoesNotExistException{
+
+        if(!examRepository.findById(id).isPresent())
+            throw new EntityDoesNotExistException("Nema tog pregleda");
+
+        Exam exam = examRepository.findById(id).get();
+
+        Doctor doctor = doctorRepository.findByName(exam.getDoctor()).get();
+
+        for (Appointment a: doctor.getSchedule().getAppointmens().get(exam.getDate())) {
+            if (a.getStart().equals(exam.getStart())){
+                a.setFree(true);
+            }
+        }
+
+        doctorRepository.save(doctor);
+        examRepository.delete(exam);
+
+    }
+
+    public ArrayList<Exam> getPredefinedExams(String clinic) throws EntityDoesNotExistException{
+
+        if(!clinicRepository.findByName(clinic).isPresent()){
+            throw new EntityDoesNotExistException("Klinika ne postoji");
+        }
+
+        return examRepository.findAllByClinicAndPatient(clinic, "PREDEFINED");
+    }
+
+    public void reservePredefined(ReservePredefinedDTO reservePredefinedDTO){
+        System.out.println("Evo me 2222");
+        System.out.println(reservePredefinedDTO.getId());
+        System.out.println(reservePredefinedDTO.getUsername());
+
+        Exam exam = examRepository.findById(reservePredefinedDTO.getId()).get();
+        exam.setPatient(reservePredefinedDTO.getUsername());
+        examRepository.save(exam);
+    }
 }

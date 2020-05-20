@@ -49,4 +49,23 @@ export class UserService {
            {headers, responseType : 'text' as 'json'} );
   }
 
+  getMyExams(patient: string){
+    return this.http.get(this.basePath + '/my_exams/' + patient, {responseType: 'json'});
+  }
+
+  cancelAppointment(id){
+    return this.http.delete(this.basePath + '/cancel_appointment/' + id, {responseType: 'text'})
+  }
+
+  getPredefinedExams(clinic: string){
+    return this.http.get(this.basePath + '/predefined_exams/'+clinic, {responseType: 'json'});
+  }
+
+  reservePredefined(predefined){
+    var headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    
+    return this.http.post(this.basePath + "/reserve_predefined", JSON.stringify(predefined),
+           {headers, responseType : 'text' as 'json'} );
+  }
+
 }

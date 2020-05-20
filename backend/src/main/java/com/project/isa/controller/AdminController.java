@@ -55,7 +55,7 @@ public class AdminController {
         try{
             adminService.approveRegistrationRequest(registrationResponseDTO.getUsername());
             emailService.sendEmail("Registration approved",
-                    registrationResponseDTO.getMessage() +
+                    registrationResponseDTO.getMessage() + "\n" +
                             "Go to \n http://localhost:8081/user/verify_user/"+ registrationResponseDTO.getUsername()+ " to verify your account",
                     registrationResponseDTO.getEmail());
         }catch (InvalidDataException e){

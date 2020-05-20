@@ -1,0 +1,74 @@
+<div class="col-md-3"></div>
+    <div class="col-sm-10">
+        <h2 class="form-signin-heading">Upcoming Exams</h2>
+        <table class="table table-striped" id = "mark">
+            <thead>
+                <tr>
+                    <th>  </th>
+                    <th>Clinic</th>
+                    <th>Date</th>
+                    <th>Doctor</th>
+                    <th>Start</th>
+                    <th>Finish</th>
+                    <th>Price</th>
+                    <th>  </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let exam of upcoming_exams; index as i">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ exam.clinic}}</td>
+                    <td>{{ exam.date}}</td>
+                    <td>{{ exam.doctor}}</td>
+                    <td>{{ exam.start}}</td>
+                    <td>{{ exam.finish}}</td>
+                    <td>{{ exam.price}}</td>
+                    <td *ngIf = isCancelable(exam)><button type="button" class="btn btn-primary"  id="cancel" (click) = "onCancel(exam.id)"><i class="far fa-eye">Cancel appointment</i></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-3"></div>
+    <div class="col-sm-10">
+        <h2 class="form-signin-heading">Past Exams</h2>
+        <table class="table table-striped" id = "mark">
+            <thead>
+                <tr>
+                    <th>  </th>
+                    <th>Clinic</th>
+                    <th>  </th>
+                    <th>Date</th>
+                    <th>Doctor</th>
+                    <th>  </th>
+                    <th>Start</th>
+                    <th>Finish</th>
+                    <th>Price</th>
+                    <th>  </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let exam of upcoming_exams; index as i">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ exam.clinic}}</td>
+                    <td>
+                        <select name="my-dropdown">
+                            <option *ngFor="let score of scores" [ngValue]="score">{{score}}</option>
+                        </select>
+                        <button type="button" class="btn btn-primary"  id="rate_clinic" ><i class="far fa-eye">Rate Clinic</i></button>
+                    </td>
+                    <td>{{ exam.date}}</td>
+                    <td>{{ exam.doctor}}</td>
+                    <td>
+                        <select name="my-dropdown">
+                            <option *ngFor="let score of scores" [ngValue]="score">{{score}}</option>
+                        </select>
+                        <button type="button" class="btn btn-primary"  id="rate_doctor" ><i class="far fa-eye">Rate Doctor</i></button>
+                    </td>
+                    <td>{{ exam.start}}</td>
+                    <td>{{ exam.finish}}</td>
+                    <td>{{ exam.price}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>

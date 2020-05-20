@@ -9,11 +9,12 @@ import { AuthenticationService } from 'src/app/services/security/authentication-
 })
 export class MainComponent implements OnInit {
 
-  public verified = 'true';
+  public verified;
 
   constructor(private userService: UserService, private authService: AuthenticationService) { }
 
   ngOnInit(): void {
+
     const user = this.authService.getCurrentUser();
     const roles = this.authService.getRoles();
     if (roles.includes('PATIENT_ROLE')){
@@ -21,6 +22,7 @@ export class MainComponent implements OnInit {
         this.verified = success;
       })
     }
+    
   
   }
 
