@@ -40,6 +40,7 @@ export class ConcludeExamComponent implements OnInit {
 
   onConclude(diagnose, therapy, exam){
     this.conclusionResponse.examId = exam.id;
+    this.conclusionResponse.doctorUsername = this.authService.getCurrentUser().username;
     this.conclusionResponse.patientUsername = exam.patient;
     this.conclusionResponse.date = exam.date;
     this.conclusionResponse.diagnose = diagnose;

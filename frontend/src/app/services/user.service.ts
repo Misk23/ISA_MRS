@@ -72,4 +72,13 @@ export class UserService {
     return this.http.get(this.basePath + '/my_medical_history/'+ username, {responseType: 'json'})
   }
 
+  leaveReview(review){
+    var headers: HttpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
+
+    return this.http.post(this.basePath + "/leave_review", JSON.stringify(review),
+            {headers, responseType: 'text' as 'json'});
+  }
+
+
+
 }

@@ -3,6 +3,7 @@ package com.project.isa.dto;
 public class ConclusionResponseDTO {
 
     private Long examId;
+    private String doctorUsername;
     private String patientUsername;
     private String date;
     private String diagnose;
@@ -50,5 +51,13 @@ public class ConclusionResponseDTO {
 
     public void setTherapy(String therapy) {
         this.therapy = therapy;
+    }
+
+    public String getDoctorUsername() {
+        return doctorUsername;
+    }
+
+    public void setDoctorUsername(String doctorUsername) {
+        this.doctorUsername = doctorUsername;
     }
 }

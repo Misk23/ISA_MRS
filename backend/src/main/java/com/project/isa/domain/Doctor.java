@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Doctor extends User{
@@ -21,7 +23,13 @@ public class Doctor extends User{
     @ManyToOne(fetch = FetchType.LAZY)
     Clinic clinic;
 
+    @Column
+    @ElementCollection(targetClass=Integer.class)
+    List<Integer> reviews;
+
+
     public Doctor() {
+        this.reviews = new ArrayList<Integer>();
     }
 
     public Doctor(Long id, String username, String password) {
@@ -58,5 +66,13 @@ public class Doctor extends User{
 
     public void setClinic(Clinic clinic) {
         this.clinic = clinic;
+    }
+
+    public List<Integer> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Integer> reviews) {
+        this.reviews = reviews;
     }
 }

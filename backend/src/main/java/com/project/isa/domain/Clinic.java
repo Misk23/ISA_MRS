@@ -35,8 +35,9 @@ public class Clinic {
     @JsonBackReference
     List<ClinicAdmin> clinicAdmins;
 
-
-
+    @Column
+    @ElementCollection(targetClass=Integer.class)
+    List<Integer> reviews;
 
     public Clinic() {
     }
@@ -45,6 +46,7 @@ public class Clinic {
         this.name = name;
         this.address = address;
         this.description = description;
+        this.reviews = new ArrayList<Integer>();
     }
 
     public Clinic(ClinicDTO clinicDTO){
@@ -117,5 +119,13 @@ public class Clinic {
 
     public void setDoctors(List<Doctor> doctors) {
         this.doctors = doctors;
+    }
+
+    public List<Integer> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Integer> reviews) {
+        this.reviews = reviews;
     }
 }

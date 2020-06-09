@@ -5,6 +5,7 @@ import com.project.isa.domain.*;
 import com.project.isa.dto.AppointmentReservationDTO;
 import com.project.isa.dto.PatientDTO;
 import com.project.isa.dto.ReservePredefinedDTO;
+import com.project.isa.dto.ReviewDTO;
 import com.project.isa.exceptions.EntityAlreadyExistsException;
 import com.project.isa.exceptions.EntityDoesNotExistException;
 import com.project.isa.exceptions.InvalidDataException;
@@ -206,9 +207,9 @@ public class UserServiceImpl implements UserService {
     }
 
     public void sendAppointmentReservationRequest(AppointmentReservationDTO appointmentReservationDTO){
-        System.out.println("Evo me");
+        /*System.out.println("Evo me");
 
-        System.out.println(appointmentReservationDTO.getPatient());
+        System.out.println(appointmentReservationDTO.getPatient());*/
 
         Exam exam = new Exam();
         exam.setClinic(appointmentReservationDTO.getClinic());
@@ -230,7 +231,7 @@ public class UserServiceImpl implements UserService {
             }
         }
 
-        System.out.println(appointmentReservationDTO.getFinish());
+//        System.out.println(appointmentReservationDTO.getFinish());
         doctorRepository.save(doctor);
         examRepository.save(exam);
 
@@ -274,9 +275,9 @@ public class UserServiceImpl implements UserService {
     }
 
     public void reservePredefined(ReservePredefinedDTO reservePredefinedDTO){
-        System.out.println("Evo me 2222");
+        /*System.out.println("Evo me 2222");
         System.out.println(reservePredefinedDTO.getId());
-        System.out.println(reservePredefinedDTO.getUsername());
+        System.out.println(reservePredefinedDTO.getUsername());*/
 
         Exam exam = examRepository.findById(reservePredefinedDTO.getId()).get();
         exam.setPatient(reservePredefinedDTO.getUsername());
@@ -291,9 +292,87 @@ public class UserServiceImpl implements UserService {
 
         Patient patient = (Patient) userRepository.findByUsername(username).get();
 
-        System.out.println(patient.getMedicalHistory().getDates());
+        /*System.out.println(patient.getMedicalHistory().getDates());
         System.out.println(patient.getMedicalHistory().getDiagnose());
-        System.out.println(patient.getMedicalHistory().getTherapy());
+        System.out.println(patient.getMedicalHistory().getTherapy());*/
         return patient.getMedicalHistory();
+    }
+
+    public void leaveReview(ReviewDTO reviewDTO) throws EntityDoesNotExistException{
+
+        if(!userRepository.findByUsername(reviewDTO.getPatient()).isPresent()){
+            throw new EntityDoesNotExistException("Nije pronadjen ovaj pacijent");
+        }
+
+        Patient patient = (Patient) userRepository.findByUsername(reviewDTO.getPatient()).get();
+
+
+
+        if (reviewDTO.getType().equals("clinic")){
+            Clinic clinic = clinicRepository.findByName(reviewDTO.getName()).get();
+            if(reviewDTO.getPrevious_score() == 0) {
+                patient.getMedicalHistory().getClinic_reviews().put(reviewDTO.getName(), reviewDTO.getScore());
+
+                clinic.getReviews().add(reviewDTO.getScore());
+
+                System.out.println("Dodao novi review;");
+                for ( int s : clinic.getReviews()){
+                    System.out.println(s);
+                }
+            }
+            else{
+                patient.getMedicalHistory().getClinic_reviews().put(reviewDTO.getName(), reviewDTO.getScore());
+
+                System.out.println("Izmenio prethodnu ocenu");
+
+                for(int i=0; i<clinic.getReviews().size(); ++i){
+                    if(clinic.getReviews().get(i) == reviewDTO.getPrevious_score()){
+                        clinic.getReviews().remove(i);
+                        clinic.getReviews().add(reviewDTO.getScore());
+                    }
+                }
+
+
+                for ( int s : clinic.getReviews()) {
+                    System.out.println(s);
+                }
+            }
+            clinicRepository.save(clinic);
+
+        }else if(reviewDTO.getType().equals("doctor")){
+            Doctor doctor = doctorRepository.findByName(reviewDTO.getName()).get();
+            if(reviewDTO.getPrevious_score() == 0) {
+                patient.getMedicalHistory().getDoctor_reviews().put(reviewDTO.getName(), reviewDTO.getScore());
+
+                doctor.getReviews().add(reviewDTO.getScore());
+
+                System.out.println("Dodao novi review Dok5\n" +
+                        "4tor;");
+                for ( int s : doctor.getReviews()){
+                    System.out.println(s);
+                }
+            }
+            else{
+                patient.getMedicalHistory().getDoctor_reviews().put(reviewDTO.getName(), reviewDTO.getScore());
+
+                System.out.println("Izmenio prethodnu ocenu DOKTOR");
+
+                for(int i=0; i<doctor.getReviews().size(); ++i){
+                    if(doctor.getReviews().get(i) == reviewDTO.getPrevious_score()){
+                        doctor.getReviews().remove(i);
+                        doctor.getReviews().add(reviewDTO.getScore());
+                    }
+                }
+
+
+                for ( int s : doctor.getReviews()) {
+                    System.out.println(s);
+                }
+            }
+            doctorRepository.save(doctor);
+        }
+
+        userRepository.save(patient);
+
     }
 }

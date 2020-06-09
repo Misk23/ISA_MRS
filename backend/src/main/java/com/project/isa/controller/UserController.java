@@ -4,10 +4,7 @@ import com.project.isa.domain.Clinic;
 import com.project.isa.domain.Doctor;
 import com.project.isa.domain.Exam;
 import com.project.isa.domain.MedicalHistory;
-import com.project.isa.dto.AppointmentReservationDTO;
-import com.project.isa.dto.LoginDTO;
-import com.project.isa.dto.PatientDTO;
-import com.project.isa.dto.ReservePredefinedDTO;
+import com.project.isa.dto.*;
 import com.project.isa.exceptions.EntityAlreadyExistsException;
 import com.project.isa.exceptions.EntityDoesNotExistException;
 import com.project.isa.exceptions.InvalidDataException;
@@ -211,6 +208,17 @@ public class UserController {
         }catch (EntityDoesNotExistException e){
             return new ResponseEntity<MedicalHistory>(new MedicalHistory(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @RequestMapping(value = "/leave_review", method = RequestMethod.POST)
+    public ResponseEntity<String> leaveReview(@RequestBody ReviewDTO reviewDTO){
+        try{
+            userService.leaveReview(reviewDTO);
+        }catch (Exception e){
+            return new ResponseEntity<String>("Leaving a review failed", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<String>("Leaving a review successful", HttpStatus.OK);
     }
 
 

@@ -21,3 +21,59 @@
             </tbody>
         </table>
     </div>
+
+
+<div class="col-md-3"></div>
+<div class="col-sm-10">
+    <h2 class="form-signin-heading">Clinics Visited</h2>
+    <table class="table table-striped" id = "mark">
+        <thead>
+            <tr>
+                <th>  </th>
+                <th>Name</th>
+                <th>Your Score</th>
+                <th>  </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let clinic of medicalHistory.clinic_reviews | keyvalue; index as i">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ clinic.key }}</td>
+                <td>{{ clinic.value }}</td>
+                <td>
+                    <select name="my-dropdown" #clinicR>
+                        <option *ngFor="let score of scores" >{{score}}</option>
+                    </select>
+                    <button type="button" class="btn btn-primary"  id="rate_clinic" (click) = "leaveReview(clinic.key, clinic.value, clinicR.value, 'clinic')"><i class="far fa-eye">Rate Doctor</i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="col-md-3"></div>
+<div class="col-sm-10">
+    <h2 class="form-signin-heading">Doctors Visited</h2>
+    <table class="table table-striped" id = "mark">
+        <thead>
+            <tr>
+                <th>  </th>
+                <th>Name</th>
+                <th>Score</th>
+                <th>  </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let doctor of medicalHistory.doctor_reviews | keyvalue; index as i">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ doctor.key }}</td>
+                <td>{{ doctor.value }}</td>
+                <td>
+                    <select name="my-dropdown"  #doctorR>
+                        <option *ngFor="let score of scores"> {{score}}</option>
+                    </select>
+                    <button type="button" class="btn btn-primary"  id="rate_doctor" (click) = "leaveReview(doctor.key, doctor.value, doctorR.value, 'doctor')"><i class="far fa-eye">Rate Doctor</i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

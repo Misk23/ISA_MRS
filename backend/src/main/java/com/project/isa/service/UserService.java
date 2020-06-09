@@ -4,6 +4,7 @@ import com.project.isa.domain.*;
 import com.project.isa.dto.AppointmentReservationDTO;
 import com.project.isa.dto.PatientDTO;
 import com.project.isa.dto.ReservePredefinedDTO;
+import com.project.isa.dto.ReviewDTO;
 import com.project.isa.exceptions.EntityAlreadyExistsException;
 import com.project.isa.exceptions.EntityDoesNotExistException;
 import com.project.isa.exceptions.InvalidDataException;
@@ -38,4 +39,6 @@ public interface UserService {
     void reservePredefined(ReservePredefinedDTO reservePredefinedDTO);
 
     MedicalHistory getMedicalHistory(String username) throws EntityDoesNotExistException;
+
+    void leaveReview(ReviewDTO reviewDTO) throws  EntityDoesNotExistException;
 }

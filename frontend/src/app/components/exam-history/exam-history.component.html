@@ -50,20 +50,8 @@
                 <tr *ngFor="let exam of past_exams; index as i">
                     <th scope="row">{{ i + 1 }}</th>
                     <td>{{ exam.clinic}}</td>
-                    <td>
-                        <select name="my-dropdown">
-                            <option *ngFor="let score of scores" [ngValue]="score">{{score}}</option>
-                        </select>
-                        <button type="button" class="btn btn-primary"  id="rate_clinic" ><i class="far fa-eye">Rate Clinic</i></button>
-                    </td>
                     <td>{{ exam.date}}</td>
                     <td>{{ exam.doctor}}</td>
-                    <td>
-                        <select name="my-dropdown">
-                            <option *ngFor="let score of scores" [ngValue]="score">{{score}}</option>
-                        </select>
-                        <button type="button" class="btn btn-primary"  id="rate_doctor" ><i class="far fa-eye">Rate Doctor</i></button>
-                    </td>
                     <td>{{ exam.start}}</td>
                     <td>{{ exam.finish}}</td>
                     <td>{{ exam.price}}</td>
