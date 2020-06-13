@@ -4,6 +4,7 @@ public class AppointmentReservationDTO {
 
     private String clinic;
     private String doctor;
+    private int version;
     private String patient;
     private String date;
     private String start;
@@ -76,5 +77,13 @@ public class AppointmentReservationDTO {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }

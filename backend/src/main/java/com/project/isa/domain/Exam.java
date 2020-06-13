@@ -10,6 +10,10 @@ public class Exam {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = true, columnDefinition = "INTEGER DEFAULT 0")
+    @Version
+    private int version;
+
     @Column
     private String clinic;
 
@@ -108,5 +112,13 @@ public class Exam {
 
     public void setConcluded(boolean concluded) {
         this.concluded = concluded;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }

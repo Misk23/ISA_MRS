@@ -2,6 +2,7 @@ package com.project.isa.dto;
 
 public class ReservePredefinedDTO {
     private Long id;
+    private int version;
     private String username;
 
 
@@ -27,5 +28,13 @@ public class ReservePredefinedDTO {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }

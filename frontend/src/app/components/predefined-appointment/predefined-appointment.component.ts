@@ -90,6 +90,7 @@ export class PredefinedAppointmentComponent implements OnInit {
 
     this.reservationRequest.clinic = this.chosenDoctor.clinic.name;
     this.reservationRequest.doctor = this.chosenDoctor.name;
+    this.reservationRequest.version = this.chosenDoctor.version;
     this.reservationRequest.patient = "PREDEFINED";
     this.reservationRequest.date = this.search.date;
     this.reservationRequest.start = a.start;

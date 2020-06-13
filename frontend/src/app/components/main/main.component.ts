@@ -4,7 +4,6 @@ import { AuthenticationService } from 'src/app/services/security/authentication-
 import { TransferService } from 'src/app/services/transfer.service';
 import { Router } from '@angular/router';
 import { Sort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 
 enum Specialties{
   INTERNAL_MEDICINE = 'INTERNAL_MEDICINE',
@@ -119,6 +118,7 @@ export class MainComponent implements OnInit {
   }
 
   onOpenDoctor(doctor){
+    console.log(doctor);
     this.chosenDoctor = doctor;
     this.doctorChosen = true;
   }
@@ -128,6 +128,7 @@ export class MainComponent implements OnInit {
 
     this.reservationRequest.clinic = this.chosenDoctor.clinic.name;
     this.reservationRequest.doctor = this.chosenDoctor.name;
+    this.reservationRequest.version = this.chosenDoctor.version;
     this.reservationRequest.patient = this.authService.getCurrentUser().username;
     this.reservationRequest.date = this.search.date;
     this.reservationRequest.start = a.start;
@@ -135,7 +136,7 @@ export class MainComponent implements OnInit {
     this.reservationRequest.price = this.chosenDoctor.schedule.price;
 
     this.userService.sendAppointmentReservationRequest(this.reservationRequest).subscribe(success => {
-      this.router.navigate(['/']);
+      this.router.navigate(['/main']);
     }, err => {
       alert(err.error);
       console.log(err);

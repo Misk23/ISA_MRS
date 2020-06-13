@@ -28,7 +28,7 @@ public interface UserService {
 
     ArrayList<Doctor> getDoctors(String name);
 
-    void sendAppointmentReservationRequest(AppointmentReservationDTO appointmentReservationDTO);
+    void sendAppointmentReservationRequest(AppointmentReservationDTO appointmentReservationDTO) throws EntityDoesNotExistException;
 
     ArrayList<Exam> getMyExams(String patient) throws EntityDoesNotExistException;
 
@@ -36,7 +36,7 @@ public interface UserService {
 
     ArrayList<Exam> getPredefinedExams(String clinic) throws EntityDoesNotExistException;
 
-    void reservePredefined(ReservePredefinedDTO reservePredefinedDTO);
+    void reservePredefined(ReservePredefinedDTO reservePredefinedDTO) throws EntityDoesNotExistException;
 
     MedicalHistory getMedicalHistory(String username) throws EntityDoesNotExistException;
 

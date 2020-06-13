@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.*;
 import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,6 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
 
     @Autowired
     private PatientRepository patientRepository;
@@ -206,7 +208,7 @@ public class UserServiceImpl implements UserService {
         return  doctors1;
     }
 
-    public void sendAppointmentReservationRequest(AppointmentReservationDTO appointmentReservationDTO){
+    public void sendAppointmentReservationRequest(AppointmentReservationDTO appointmentReservationDTO) throws EntityDoesNotExistException{
         /*System.out.println("Evo me");
 
         System.out.println(appointmentReservationDTO.getPatient());*/
@@ -221,15 +223,19 @@ public class UserServiceImpl implements UserService {
         exam.setPatient(appointmentReservationDTO.getPatient());
 
 
-
-
         Doctor doctor = doctorRepository.findByName(appointmentReservationDTO.getDoctor()).get();
 
-        for (Appointment a: doctor.getSchedule().getAppointmens().get(appointmentReservationDTO.getDate())) {
-            if (a.getStart().equals(appointmentReservationDTO.getStart())){
-                a.setFree(false);
+        if(appointmentReservationDTO.getVersion() == doctor.getVersion()) {
+
+            for (Appointment a : doctor.getSchedule().getAppointmens().get(appointmentReservationDTO.getDate())) {
+                if (a.getStart().equals(appointmentReservationDTO.getStart())) {
+                    a.setFree(false);
+                    doctor.setVersion(doctor.getVersion() + 1);
+                }
             }
         }
+        else
+            throw new EntityDoesNotExistException("Appointment already reserved, please try again");
 
 //        System.out.println(appointmentReservationDTO.getFinish());
         doctorRepository.save(doctor);
@@ -274,14 +280,18 @@ public class UserServiceImpl implements UserService {
         return examRepository.findAllByClinicAndPatient(clinic, "PREDEFINED");
     }
 
-    public void reservePredefined(ReservePredefinedDTO reservePredefinedDTO){
+    public void reservePredefined(ReservePredefinedDTO reservePredefinedDTO) throws EntityDoesNotExistException{
         /*System.out.println("Evo me 2222");
         System.out.println(reservePredefinedDTO.getId());
         System.out.println(reservePredefinedDTO.getUsername());*/
 
         Exam exam = examRepository.findById(reservePredefinedDTO.getId()).get();
-        exam.setPatient(reservePredefinedDTO.getUsername());
-        examRepository.save(exam);
+        if(reservePredefinedDTO.getVersion() == exam.getVersion()) {
+            exam.setPatient(reservePredefinedDTO.getUsername());
+            exam.setVersion(exam.getVersion()+1);
+            examRepository.save(exam);
+        }else
+            throw new EntityDoesNotExistException("Predefined exam no longer available, try again");
     }
 
     public MedicalHistory getMedicalHistory(String username) throws EntityDoesNotExistException{

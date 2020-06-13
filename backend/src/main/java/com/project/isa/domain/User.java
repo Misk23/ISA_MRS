@@ -14,6 +14,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 0")
+    @Version
+    private int version;
+
     @Column(nullable = false)
     private String username;
 
@@ -64,5 +68,13 @@ public class User {
 
     public void setUserAuthorities(Set<UserAuthority> userAuthorities) {
         this.userAuthorities = userAuthorities;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }

@@ -73,8 +73,10 @@ export class ShowClinicsComponent implements OnInit {
     }
   }
 
-  onReservePredefined(id){
-    this.reservePredefined.id = id;
+  onReservePredefined(exam){
+    this.reservePredefined.id = exam.id;
+    this.reservePredefined.version = exam.version;
+    console.log(exam.version);
     this.reservePredefined.username = this.authService.getCurrentUser().username;
     this.userService.reservePredefined(this.reservePredefined).subscribe(success => {
       this.router.navigate(['/']);
