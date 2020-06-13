@@ -1,22 +1,31 @@
 <div class="col-md-3"></div>
     <div class="col-sm-10">
         <h2 class="form-signin-heading">List Of Clinics</h2>
-        <table class="table table-striped" id = "mark">
+        <input
+        type="text"
+        class="form-control"
+        name="searchStringC"
+        placeholder="Type to search..."
+        [(ngModel)]="searchStringC"
+      />
+        <table matSort (matSortChange)="sortClinics($event)" class="table table-striped" id = "mark">
             <thead>
                 <tr>
                     <th>  </th>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Description</th>
+                    <th mat-sort-header="name" >Name</th>
+                    <th mat-sort-header="address" > Address</th>
+                    <th mat-sort-header="description" >Description</th>
+                    <th mat-sort-header="rating"> Rating</th>
                     <th>  </th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let clinic of clinics; index as i">
+                <tr *ngFor="let clinic of sortedClinics| filter : 'name' : searchStringC; index as i">
                     <th scope="row">{{ i + 1 }}</th>
                     <td>{{ clinic.name}}</td>
                     <td>{{ clinic.address}}</td>
                     <td>{{ clinic.description}}</td>
+                    <td>{{ calculateAverage(clinic) }}</td>
                     <td><button type="button" class="btn btn-primary"  id="open" (click) = "onOpen(clinic)"><i class="far fa-eye">Show all doctors</i></button></td>
                     <td><button type="button" class="btn btn-primary"  id="open_predefined" (click) = "openPredefined(clinic)"><i class="far fa-eye">Predefined appointments</i></button></td>
                 </tr>

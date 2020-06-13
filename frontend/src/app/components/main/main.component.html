@@ -1,1 +1,116 @@
 <h1 *ngIf = "verified == 'false'">Please verify your account</h1>
+
+<div class="col-md-3"></div>
+    <div class="col-sm-10">
+        <h2 class="form-signin-heading">Make An Appointment</h2>
+        <div class="row">
+            <div class="form-group col-xs">
+                <label class="col-lg-3 control-label">Date:</label>
+                <input class="form-control" type="text" placeholder="dd/MM/yyyy" id="search.date" name="search.date" [(ngModel)]="search.date">
+            </div>
+            <div class="form-group col-xs">
+                <label class="col-lg-3 control-label">Specialties:</label>
+                <br>
+                <select id= "specialties" name="specialties" [(ngModel)]="search.specialties" style="display: inline-block" class="ml-1 mb-4">
+                    <option *ngFor="let key of specialtiesTypeOptions" [value]="key" [label]="specialties[key]"></option>
+                </select>
+            </div>
+
+            <br><br>
+            <div class="form-group col-xs-2">
+                <br>
+                <button type="button" class="btn btn-primary"  id="search" (click)= "searchOpen()"><i class="far fa-eye">Search</i></button>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="col-sm-10" *ngIf="searched">
+        <h2 class="form-signin-heading">List Of Clinics</h2>
+        <input
+        type="text"
+        class="form-control"
+        name="searchStringC"
+        placeholder="Type to search..."
+        [(ngModel)]="searchStringC"
+      />
+        <table matSort (matSortChange)="sortClinics($event)" class="table table-striped" id = "mark">
+
+            <thead>
+                <tr>
+                    <th>  </th>
+                    <th mat-sort-header="name" >Name</th>
+                    <th mat-sort-header="address" > Address</th>
+                    <th mat-sort-header="description" >Description</th>
+                    <th mat-sort-header="rating"> Rating</th>
+                    <th>  </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let clinic of sortedClinics | filter : 'name' : searchStringC; index as i">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ clinic.name}}</td>
+                    <td>{{ clinic.address}}</td>
+                    <td>{{ clinic.description}}</td>
+                    <td>{{ calculateAverage(clinic) }}</td>
+                    <td><button type="button" class="btn btn-primary"  id="open" (click) = "onOpen(clinic)"><i class="far fa-eye">Show available doctors</i></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-10" *ngIf= "clinicChosen">
+        <h2 class="form-signin-heading">List Of Available Doctors</h2>
+        <input
+        type="text"
+        class="form-control"
+        name="searchStringD"
+        placeholder="Type to search..."
+        [(ngModel)]="searchStringD"
+      />
+
+        <table matSort (matSortChange)="sortDoctors($event)" class="table table-striped" id = "mark">
+            <thead>
+                <tr>
+                    <th>  </th>
+                    <th mat-sort-header="name" >Name</th>
+                    <th mat-sort-header="specialties" >Specialties</th>
+                    <th mat-sort-header="price">Appointment Price</th>
+                    <th mat-sort-header="rating">Rating</th>
+                    <th>  </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let doctor of sortedDoctors| filter : 'name': searchStringD; index as i">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ doctor.name}}</td>
+                    <td>{{ doctor.specialties}}</td>
+                    <td>{{ doctor.schedule.price}}</td>
+                    <td>{{ calculateAverage(doctor) }}</td>
+                    <td><button *ngIf = "searched" type="button" class="btn btn-primary"  id="openD" (click) = "onOpenDoctor(doctor)" ><i class="far fa-eye">Available Appointments</i></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-sm-10" *ngIf= "doctorChosen">
+        <h2 class="form-signin-heading">List Of Available Appointments</h2>
+        <table class="table table-striped" id = "mark" >
+            <thead>
+                <tr>
+                    <th>  </th>
+                    <th>Start</th>
+                    <th>Finish</th>
+                    <th>  </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let a of chosenDoctor.schedule.appointmens[this.search.date]; index as i" >
+                    <th scope="row" *ngIf = "a.free">{{ i + 1 }}</th>
+                    <td *ngIf = "a.free">{{ a.start}}</td>
+                    <td *ngIf = "a.free">{{ a.finish}}</td>
+                    <td *ngIf = "a.free"> <button type="button" class="btn btn-primary"  id="reserve" (click) = "onReserve(a)"><i class="far fa-eye">Reserve</i></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    

@@ -2,6 +2,7 @@
 <div class="col-md-3"></div>
     <div class="col-sm-10">
         <h2 class="form-signin-heading">List Of Doctors</h2>
+        
         <div class="row">
             <div class="form-group col-xs">
                 <label class="col-lg-3 control-label">Date:</label>
@@ -20,22 +21,33 @@
                 <button type="button" class="btn btn-primary"  id="search" (click)= "searchOpen()"><i class="far fa-eye">Search</i></button>
             </div>
         </div>
-        <table class="table table-striped" id = "mark">
+
+        <input *ngIf = "searched"
+        type="text"
+        class="form-control"
+        name="searchStringD"
+        placeholder="Type to search..."
+        [(ngModel)]="searchStringD"
+      />
+      
+        <table matSort (matSortChange)="sortDoctors($event)" class="table table-striped" id = "mark">
             <thead>
                 <tr>
                     <th>  </th>
-                    <th>Name</th>
-                    <th>Specialties</th>
-                    <th>Appointment Price</th>
+                    <th mat-sort-header="name" >Name</th>
+                    <th mat-sort-header="specialties" >Specialties</th>
+                    <th mat-sort-header="price">Appointment Price</th>
+                    <th mat-sort-header="rating">Rating</th>
                     <th>  </th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let doctor of aDoctors; index as i">
+                <tr *ngFor="let doctor of sortedDoctors| filter : 'name': searchStringD; index as i">
                     <th scope="row">{{ i + 1 }}</th>
                     <td>{{ doctor.name}}</td>
                     <td>{{ doctor.specialties}}</td>
                     <td>{{ doctor.schedule.price}}</td>
+                    <td>{{ calculateAverage(doctor) }}</td>
                     <td><button *ngIf = "searched" type="button" class="btn btn-primary"  id="open" (click) = "onOpen(doctor)"><i class="far fa-eye">Available Appointments</i></button></td>
                 </tr>
             </tbody>

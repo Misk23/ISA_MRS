@@ -1,4 +1,8 @@
 // Misk
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
@@ -34,6 +38,7 @@ import { ExamHistoryComponent } from './components/exam-history/exam-history.com
 import { PredefinedAppointmentComponent } from './components/predefined-appointment/predefined-appointment.component';
 import { MedicalHistoryComponent } from './components/medical-history/medical-history.component';
 import { ConcludeExamComponent } from './components/conclude-exam/conclude-exam.component';
+import { FilterPipe } from './filter.pipe';
 
 
 const appRoutes: Routes = [
@@ -109,7 +114,8 @@ const appRoutes: Routes = [
     ExamHistoryComponent,
     PredefinedAppointmentComponent,
     MedicalHistoryComponent,
-    ConcludeExamComponent
+    ConcludeExamComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
@@ -120,7 +126,10 @@ const appRoutes: Routes = [
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    AppRoutingModule  
+    AppRoutingModule,
+    MatTableModule,
+    MatSortModule,
+    BrowserAnimationsModule 
   ],
   providers: [
     AuthGuardGuard,

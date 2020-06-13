@@ -3,6 +3,7 @@ import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { TransferService } from 'src/app/services/transfer.service';
 import { AuthenticationService } from 'src/app/services/security/authentication-service.service';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-show-clinics',
@@ -11,6 +12,9 @@ import { AuthenticationService } from 'src/app/services/security/authentication-
 })
 export class ShowClinicsComponent implements OnInit {
 
+  public sortedClinics;
+
+  public searchStringC;
 
   public clinics = [];
   public doctors = [];
@@ -41,6 +45,7 @@ export class ShowClinicsComponent implements OnInit {
         });
       }
     }
+    this.sortedClinics = this.clinics;
   }
   onOpen(clinic){
     this.clinicChosen = true;
@@ -80,4 +85,39 @@ export class ShowClinicsComponent implements OnInit {
 
   }
 
+  calculateAverage(data){
+    var sum = 0;
+    for(let review of data.reviews){
+      sum += review;
+    }
+    if(data.reviews.length !=0 ){
+      return sum/data.reviews.length;
+    }
+    return 0;
+  }
+
+  sortClinics(sort: Sort) {
+    const data = this.clinics;
+    console.log("tu sam");  
+    if (!sort.active || sort.direction === '') {
+      this.sortedClinics = data;
+      return;
+    }
+
+    this.sortedClinics = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'name': return compare(a.name, b.name, isAsc);
+        case 'address': return compare(a.address, b.address, isAsc);
+        case 'description': return compare(a.description, b.description, isAsc);
+        case 'rating': return compare(this.calculateAverage(a),this.calculateAverage(b), isAsc);
+        default: return 0;
+      }
+    });
+  }
+
+}
+
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }

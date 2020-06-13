@@ -346,8 +346,7 @@ public class UserServiceImpl implements UserService {
 
                 doctor.getReviews().add(reviewDTO.getScore());
 
-                System.out.println("Dodao novi review Dok5\n" +
-                        "4tor;");
+                System.out.println("Dodao novi review Doktor;");
                 for ( int s : doctor.getReviews()){
                     System.out.println(s);
                 }
