@@ -8,8 +8,15 @@ services:
 before_install:
   - cd backend
   - chmod +x mvnw
+  
+addons:
+  sonarcloud:
+  organization: "losaodluka01"
+  token: "c2c4402266138d4de2a875569d9e25a7156dcd7a"
 
 script:
   - ./mvnw clean install -DskipTests=true -B
+  - ./mvnw sonar:sonar -Dsonar.projectKey=losaodluka01_ISA_MRS -Dsonar.organization=losaodluka01 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=c2c4402266138d4de2a875569d9e25a7156dcd7a
 
 dist: trusty
+
