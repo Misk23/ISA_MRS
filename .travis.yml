@@ -6,4 +6,8 @@ services:
   - postgresql
 
 before_install:
+  - cd backend
   - chmod +x mvnw
+  
+  script:
+  - ./mvnw clean install -DskipTests=false -B
