@@ -20,3 +20,8 @@ script:
 
 dist: trusty
 
+deploy:
+  provider: heroku
+  api_key: 1366be50-2ae0-472c-95fd-b3e0cd7038ef
+  app: eclinic05
+
