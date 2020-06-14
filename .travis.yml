@@ -6,7 +6,7 @@ services:
   - postgresql
 
 before_install:
-  - cd tim05/tim05
+  - cd backend
   - chmod +x mvnw
 
 script:
