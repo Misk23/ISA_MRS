@@ -1,14 +1,15 @@
 sudo: required
 language: java
-jdk: oraclejdk11
+jdk: oraclejdk8
 
 services:
   - postgresql
 
 before_install:
-  - cd backend
+  - cd tim05/tim05
   - chmod +x mvnw
-  
-  script:
-  - ./mvnw clean install -DskipTests=false -B
-  
+
+script:
+  - ./mvnw clean install -DskipTests=true -B
+
+dist: trusty
